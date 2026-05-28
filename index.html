@@ -711,13 +711,28 @@
 
     .reviews-track-wrap {
       position:relative; overflow:hidden; padding:var(--sp-4) 0;
+      /* Always visible — no opacity or transform hiding */
+      opacity:1 !important; transform:none !important;
     }
     .reviews-track {
       display:flex; gap:var(--sp-5);
       width:max-content;
       animation: scrollReviews 55s linear infinite;
+      /* Always visible */
+      opacity:1 !important; transform:translateX(0);
+      visibility:visible !important;
     }
     .reviews-track:hover { animation-play-state:paused; }
+    /* Fallback grid when animation is not supported or disabled */
+    @media (prefers-reduced-motion: reduce) {
+      .reviews-track {
+        animation: none;
+        display:grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        width:100%;
+      }
+      .reviews-track .review-card[aria-hidden="true"] { display:none; }
+    }
     @keyframes scrollReviews {
       from { transform:translateX(0); }
       to   { transform:translateX(-50%); }
@@ -1253,14 +1268,14 @@
 ═══════════════════════════════════════════════ -->
 <section class="reviews" id="reviews" aria-label="تقييمات العملاء">
   <div class="container">
-    <div class="reviews-header reveal">
+    <div class="reviews-header">
       <div class="section-tag"><i class="fas fa-circle"></i> آراء عملائنا</div>
       <h2 class="section-title">ماذا يقول زبائننا؟</h2>
       <p class="section-sub">+٨٤٠ تقييم حقيقي من عملاء راضين في مكة  والرياض والقاهرة</p>
     </div>
 
     <!-- Aggregate Rating -->
-    <div class="reviews-aggregate reveal">
+    <div class="reviews-aggregate">
       <div class="agg-score" aria-label="متوسط التقييم 4.9">٤.٩</div>
       <div class="agg-detail">
         <div class="agg-stars" aria-label="5 نجوم">★★★★★</div>
@@ -1828,7 +1843,48 @@ document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') { e.preventDefault(); q.click(); } });
 });
 
-// ── Smooth scroll for anchor links
+// ── Ensure reviews section is always visible
+(function() {
+  // Force reviews aggregate and track to be visible immediately
+  const reviewsAggregate = document.querySelector('.reviews-aggregate');
+  const reviewsTrack = document.querySelector('.reviews-track');
+  const reviewsTrackWrap = document.querySelector('.reviews-track-wrap');
+  
+  if (reviewsAggregate) {
+    reviewsAggregate.style.opacity = '1';
+    reviewsAggregate.style.transform = 'none';
+    reviewsAggregate.classList.add('visible');
+  }
+  if (reviewsTrackWrap) {
+    reviewsTrackWrap.style.opacity = '1';
+    reviewsTrackWrap.style.visibility = 'visible';
+  }
+  if (reviewsTrack) {
+    reviewsTrack.style.opacity = '1';
+    reviewsTrack.style.visibility = 'visible';
+    
+    // If animation is broken or track is empty-looking, fallback to grid
+    setTimeout(function() {
+      const cards = reviewsTrack.querySelectorAll('.review-card:not([aria-hidden="true"])');
+      if (cards.length === 0) {
+        reviewsTrack.style.animation = 'none';
+        reviewsTrack.style.display = 'grid';
+        reviewsTrack.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+        reviewsTrack.style.width = '100%';
+      }
+    }, 100);
+  }
+
+  // Also ensure reviews header is visible
+  const reviewsHeader = document.querySelector('.reviews-header');
+  if (reviewsHeader) {
+    reviewsHeader.style.opacity = '1';
+    reviewsHeader.style.transform = 'none';
+    reviewsHeader.classList.add('visible');
+  }
+})();
+
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const id = a.getAttribute('href').slice(1);
