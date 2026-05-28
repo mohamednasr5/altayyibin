@@ -29,8 +29,25 @@
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
 <link rel="manifest" href="manifest.json">
-<meta name="description" content="مطعم الطيبين - أصل المطبخ المصري">
-<title>مطعم الطيبين</title>
+<meta name="description" content="قائمة طعام مطعم الطيبين — تصفّح أشهى الأكلات الشعبية المصرية في مكة : كشري، فول مدمس، طعمية، حواوشي، كبدة إسكندرانية وغيرها. أسعار مناسبة وجودة لا تُقارن.">
+<meta name="keywords" content="قائمة مطعم الطيبين, كشري مكة, فول مدمس, طعمية, حواوشي, كبدة إسكندراني, أسعار مطعم مصري مكة">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://altayyibin.com/menu.html">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://altayyibin.com/menu.html">
+<meta property="og:title" content="قائمة طعام مطعم الطيبين — أكلات شعبية مصرية أصيلة">
+<meta property="og:description" content="تصفّح قائمة مطعم الطيبين الكاملة: كشري، فول، طعمية، حواوشي، كبدة إسكندرانية وغيرها. أجود الأكلات الشعبية المصرية في مكة.">
+<meta property="og:image" content="https://altayyibin.com/altayyibin.jpeg">
+<meta property="og:image:alt" content="قائمة مطعم الطيبين">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:site_name" content="مطعم الطيبين">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="قائمة مطعم الطيبين — أكلات شعبية مصرية">
+<meta name="twitter:description" content="كشري، فول، طعمية، حواوشي وكبدة إسكندرانية في مكة.">
+<meta name="twitter:image" content="https://altayyibin.com/altayyibin.jpeg">
+<title>قائمة مطعم الطيبين | كشري، فول، طعمية، حواوشي — مكة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -754,9 +771,39 @@ background: var(--gold-dim);
 @media (prefers-reduced-motion: reduce) {
 *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ════ PWA INSTALL BANNER ════ */
+.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#1a0f00 0%,#2e1c06 100%);border-top:2px solid #c9962b;box-shadow:0 -4px 24px rgba(0,0,0,.45);transform:translateY(110%);transition:transform .45s cubic-bezier(.16,1,.3,1);will-change:transform;}
+.pwa-banner--visible{transform:translateY(0);}
+.pwa-banner__inner{display:flex;align-items:center;gap:14px;padding:14px 18px;max-width:700px;margin:0 auto;}
+.pwa-banner__icon{width:52px;height:52px;border-radius:14px;flex-shrink:0;box-shadow:0 2px 10px rgba(201,150,43,.35);}
+.pwa-banner__text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;text-align:right;}
+.pwa-banner__title{font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;color:#e8b84b;line-height:1.3;}
+.pwa-banner__sub{font-family:'Tajawal',sans-serif;font-size:12.5px;color:#c9b89a;line-height:1.4;}
+.pwa-banner__btn-install{background:linear-gradient(135deg,#c9962b,#e8b84b);color:#1a0f00;border:none;border-radius:10px;padding:9px 20px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:opacity .2s,transform .15s;box-shadow:0 2px 10px rgba(201,150,43,.4);}
+.pwa-banner__btn-install:hover{opacity:.9;transform:scale(1.03);}
+.pwa-banner__btn-close{background:transparent;border:none;color:#7a6a55;cursor:pointer;padding:6px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;transition:color .2s,background .2s;}
+.pwa-banner__btn-close:hover{color:#e8b84b;background:rgba(201,150,43,.12);}
+@media(max-width:480px){.pwa-banner__inner{gap:10px;padding:12px 14px;}.pwa-banner__icon{width:44px;height:44px;}.pwa-banner__title{font-size:13.5px;}.pwa-banner__sub{font-size:11.5px;}.pwa-banner__btn-install{padding:8px 14px;font-size:13px;}}
 </style>
 </head>
 <body>
+
+<!-- ═══ PWA INSTALL BANNER ═══ -->
+<div id="pwa-install-banner" class="pwa-banner" role="dialog" aria-label="تثبيت تطبيق مطعم الطيبين" dir="rtl">
+  <div class="pwa-banner__inner">
+    <img src="icons/icon-96x96.png" alt="أيقونة الطيبين" class="pwa-banner__icon" width="52" height="52">
+    <div class="pwa-banner__text">
+      <strong class="pwa-banner__title">ثبّت تطبيق الطيبين</strong>
+      <span class="pwa-banner__sub">اطّلع على قائمتنا بسرعة أكبر — بدون إنترنت!</span>
+    </div>
+    <button id="pwa-install-btn" class="pwa-banner__btn-install" aria-label="تثبيت التطبيق">تثبيت</button>
+    <button id="pwa-install-close" class="pwa-banner__btn-close" aria-label="إغلاق">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
 <!-- LOADER -->
 <div class="loader" id="loader">
 <div class="loader-logo">
@@ -2042,6 +2089,56 @@ navigator.serviceWorker.register('./sw.js', { scope: './' })
 .then(r => console.log('[PWA] SW registered', r.scope))
 .catch(e => console.warn('[PWA] SW failed:', e));
 }
+})();
+
+// ══════════════════════════════════════════════════════════
+//  PWA INSTALL BANNER — بانر تثبيت التطبيق
+// ══════════════════════════════════════════════════════════
+(function() {
+  let deferredPrompt = null;
+  const DISMISSED_KEY = 'pwa_install_dismissed';
+  const banner = document.getElementById('pwa-install-banner');
+  const btnInstall = document.getElementById('pwa-install-btn');
+  const btnClose   = document.getElementById('pwa-install-close');
+  function wasDismissed() {
+    const ts = localStorage.getItem(DISMISSED_KEY);
+    if (!ts) return false;
+    return (Date.now() - parseInt(ts)) < 7 * 24 * 60 * 60 * 1000;
+  }
+  function showBanner() {
+    if (!banner || wasDismissed()) return;
+    setTimeout(() => banner.classList.add('pwa-banner--visible'), 2500);
+  }
+  function hideBanner() {
+    if (!banner) return;
+    banner.classList.remove('pwa-banner--visible');
+  }
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showBanner();
+  });
+  if (btnInstall) {
+    btnInstall.addEventListener('click', async () => {
+      hideBanner();
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (outcome === 'dismissed') localStorage.setItem(DISMISSED_KEY, Date.now().toString());
+      }
+    });
+  }
+  if (btnClose) {
+    btnClose.addEventListener('click', () => {
+      hideBanner();
+      localStorage.setItem(DISMISSED_KEY, Date.now().toString());
+    });
+  }
+  window.addEventListener('appinstalled', () => { hideBanner(); deferredPrompt = null; });
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.navigator.standalone === true;
+  if (isIos && !isStandalone && !wasDismissed()) showBanner();
 })();
 </script>
 </body>
