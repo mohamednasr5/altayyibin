@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="0" fill="#1a0f00"/>
+
+  <!-- Decorative outer ring -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#c9962b" stroke-width="6" stroke-dasharray="12 8" opacity="0.35"/>
+
+  <!-- Inner gold ring -->
+  <circle cx="256" cy="256" r="195" fill="none" stroke="#c9962b" stroke-width="2" opacity="0.2"/>
+
+  <!-- Ornate star (Arabic style) -->
+  <path d="M256 68
+    L278 156 L362 134 L316 204
+    L400 232 L320 268
+    L344 358 L268 312
+    L256 400 L244 312
+    L168 358 L192 268
+    L112 232 L196 204
+    L150 134 L234 156 Z"
+    fill="none"
+    stroke="#c9962b"
+    stroke-width="14"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    opacity="0.9"/>
+
+  <!-- Inner star fill (lighter) -->
+  <path d="M256 110
+    L272 172 L332 156 L296 206
+    L354 228 L296 252
+    L312 316 L258 282
+    L256 340 L254 282
+    L200 316 L216 252
+    L158 228 L216 206
+    L180 156 L240 172 Z"
+    fill="#c9962b"
+    opacity="0.12"/>
+
+  <!-- Center decorative circle -->
+  <circle cx="256" cy="256" r="42" fill="#c9962b" opacity="0.85"/>
+
+  <!-- Center dish icon -->
+  <ellipse cx="256" cy="263" rx="26" ry="7" fill="#1a0f00" opacity="0.6"/>
+  <path d="M236 256 Q256 243 276 256" fill="none" stroke="#1a0f00" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Arabic decorative dots in corners -->
+  <circle cx="100" cy="100" r="5" fill="#c9962b" opacity="0.3"/>
+  <circle cx="412" cy="100" r="5" fill="#c9962b" opacity="0.3"/>
+  <circle cx="100" cy="412" r="5" fill="#c9962b" opacity="0.3"/>
+  <circle cx="412" cy="412" r="5" fill="#c9962b" opacity="0.3"/>
+</svg>

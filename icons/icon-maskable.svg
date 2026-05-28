@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Full background (maskable needs full bleed) -->
+  <rect width="512" height="512" fill="#1a0f00"/>
+
+  <!-- Safe zone content (80% = 204px margin = ~154 to 358) -->
+  <!-- Decorative ring -->
+  <circle cx="256" cy="256" r="185" fill="none" stroke="#c9962b" stroke-width="5" stroke-dasharray="10 7" opacity="0.3"/>
+
+  <!-- Star -->
+  <path d="M256 90
+    L274 163 L345 144 L304 204
+    L375 230 L306 258
+    L326 332 L260 292
+    L256 368 L252 292
+    L186 332 L206 258
+    L137 230 L208 204
+    L167 144 L238 163 Z"
+    fill="none"
+    stroke="#c9962b"
+    stroke-width="13"
+    stroke-linejoin="round"
+    stroke-linecap="round"/>
+
+  <!-- Soft inner fill -->
+  <path d="M256 130
+    L269 182 L320 168 L290 210
+    L338 230 L288 250
+    L303 304 L258 276
+    L256 328 L254 276
+    L209 304 L224 250
+    L174 230 L222 210
+    L192 168 L243 182 Z"
+    fill="#c9962b"
+    opacity="0.1"/>
+
+  <!-- Center circle -->
+  <circle cx="256" cy="256" r="40" fill="#c9962b" opacity="0.9"/>
+  <ellipse cx="256" cy="262" rx="24" ry="6" fill="#1a0f00" opacity="0.55"/>
+  <path d="M239 255 Q256 244 273 255" fill="none" stroke="#1a0f00" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+</svg>
