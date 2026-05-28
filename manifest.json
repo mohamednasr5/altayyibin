@@ -2,8 +2,8 @@
   "name": "مطعم الطيبين",
   "short_name": "الطيبين",
   "description": "قائمة مطعم الطيبين — الأكلات الشعبية المصرية الأصيلة",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "https://altayyibin.com/",
+  "scope": "https://altayyibin.com/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#1a0f00",
@@ -105,7 +105,7 @@
       "name": "قائمة الطعام",
       "short_name": "القائمة",
       "description": "تصفح قائمة الطعام الكاملة",
-      "url": "./#menu",
+      "url": "https://altayyibin.com/#menu",
       "icons": [
         { "src": "icons/icon-96x96.png", "sizes": "96x96", "type": "image/png" }
       ]
