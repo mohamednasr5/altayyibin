@@ -655,6 +655,53 @@
       position:absolute; inset:0;
       background:radial-gradient(circle at 50% 60%, rgba(201,150,43,0.1) 0%, transparent 70%);
     }
+    /* ═══════════ DISH ICON ANIMATIONS ═══════════ */
+    .dish-icon-wrap .dish-emoji {
+      display:inline-block;
+      animation: dishFloat 3s ease-in-out infinite;
+      transform-origin: center bottom;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
+      position: relative; z-index: 1;
+    }
+    .dish-card:nth-child(1) .dish-emoji { animation-name: dishFloat;    animation-delay: 0s; }
+    .dish-card:nth-child(2) .dish-emoji { animation-name: dishSpin;     animation-delay: 0.3s; }
+    .dish-card:nth-child(3) .dish-emoji { animation-name: dishBounce;   animation-delay: 0.6s; }
+    .dish-card:nth-child(4) .dish-emoji { animation-name: dishFloat;    animation-delay: 0.9s; }
+    .dish-card:nth-child(5) .dish-emoji { animation-name: dishPulse;    animation-delay: 1.2s; }
+    .dish-card:nth-child(6) .dish-emoji { animation-name: dishBounce;   animation-delay: 1.5s; }
+
+    @keyframes dishFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25%       { transform: translateY(-10px) rotate(-3deg); }
+      75%       { transform: translateY(-6px) rotate(3deg); }
+    }
+    @keyframes dishSpin {
+      0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+      30%       { transform: translateY(-8px) rotate(-8deg) scale(1.08); }
+      60%       { transform: translateY(-12px) rotate(8deg) scale(1.05); }
+    }
+    @keyframes dishBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      40%       { transform: translateY(-14px) scale(1.1); }
+      60%       { transform: translateY(-8px) scale(1.05); }
+    }
+    @keyframes dishPulse {
+      0%, 100% { transform: scale(1) translateY(0); filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4)); }
+      50%       { transform: scale(1.15) translateY(-6px); filter: drop-shadow(0 16px 24px rgba(201,150,43,0.35)); }
+    }
+    /* Glow ring on hover */
+    .dish-card:hover .dish-icon-wrap::before {
+      content:'';
+      position:absolute; inset:0;
+      background: radial-gradient(circle at 50% 50%, rgba(201,150,43,0.25) 0%, transparent 65%);
+      animation: glowPulse 1.2s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+    /* Speed up animation on hover */
+    .dish-card:hover .dish-emoji { animation-duration: 1.2s !important; }
     .dish-card-body { padding:var(--sp-5); }
     .dish-card-body h3 {
       font-family:var(--font-display); font-size:1.15rem;
@@ -717,7 +764,7 @@
     .reviews-track {
       display:flex; gap:var(--sp-5);
       width:max-content;
-      animation: scrollReviews 55s linear infinite;
+      animation: scrollReviewsRTL 55s linear infinite;
       /* Always visible */
       opacity:1 !important; transform:translateX(0);
       visibility:visible !important;
@@ -733,10 +780,30 @@
       }
       .reviews-track .review-card[aria-hidden="true"] { display:none; }
     }
-    @keyframes scrollReviews {
-      from { transform:translateX(0); }
-      to   { transform:translateX(-50%); }
+    @keyframes scrollReviewsRTL {
+      from { transform:translateX(-50%); }
+      to   { transform:translateX(0); }
     }
+    /* ═══════════ REVIEWS NAV BUTTONS ═══════════ */
+    .reviews-nav {
+      display:flex; align-items:center; justify-content:center;
+      gap:var(--sp-4); margin-top:var(--sp-8);
+    }
+    .reviews-nav-btn {
+      width:48px; height:48px; border-radius:var(--r-full);
+      background:var(--dark-2); border:1.5px solid var(--border);
+      color:var(--gold-l); font-size:1.1rem;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .25s cubic-bezier(.16,1,.3,1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .reviews-nav-btn:hover {
+      background:var(--gold); color:var(--ink);
+      border-color:var(--gold);
+      transform:scale(1.1);
+      box-shadow: 0 6px 24px rgba(201,150,43,0.35);
+    }
+    .reviews-nav-btn:active { transform:scale(0.96); }
     .review-card {
       width:300px; flex-shrink:0;
       background:var(--dark-2); border:1px solid var(--divider);
@@ -1188,7 +1255,7 @@
     </div>
     <div class="dishes-grid">
       <article class="dish-card reveal">
-        <div class="dish-icon-wrap">🍛</div>
+        <div class="dish-icon-wrap"><span class="dish-emoji">🍛</span></div>
         <div class="dish-card-body">
           <h3>الكشري المصري الأصيل</h3>
           <p>أرز، عدس، مكرونة، بصل مقلي، صوص طماطم حار وخل بالليمون — الطبق الوطني المصري بأصيل نكهته</p>
@@ -1199,7 +1266,7 @@
         </div>
       </article>
       <article class="dish-card reveal">
-        <div class="dish-icon-wrap">🫘</div>
+        <div class="dish-icon-wrap"><span class="dish-emoji">🫘</span></div>
         <div class="dish-card-body">
           <h3>فول مدمس بالزيت والليمون</h3>
           <p>فول مطبوخ على نار هادئة مع زيت زيتون وليمون طازج وثوم وكمون — إفطار المصريين الأصيل</p>
@@ -1210,7 +1277,7 @@
         </div>
       </article>
       <article class="dish-card reveal">
-        <div class="dish-icon-wrap">🧆</div>
+        <div class="dish-icon-wrap"><span class="dish-emoji">🧆</span></div>
         <div class="dish-card-body">
           <h3>طعمية مقرمشة</h3>
           <p>فلافل مصرية من الفول الأخضر بالأعشاب والبهارات — مقرمشة من الخارج، طرية من الداخل</p>
@@ -1221,7 +1288,7 @@
         </div>
       </article>
       <article class="dish-card reveal">
-        <div class="dish-icon-wrap">🥙</div>
+        <div class="dish-icon-wrap"><span class="dish-emoji">🥙</span></div>
         <div class="dish-card-body">
           <h3>حواوشي الإسكندراني</h3>
           <p>لحمة مفرومة بالبهارات المصرية في عيش بلدي مقرمش على الفرن — طعم لا يُنسى</p>
@@ -1232,7 +1299,7 @@
         </div>
       </article>
       <article class="dish-card reveal">
-        <div class="dish-icon-wrap">🔥</div>
+        <div class="dish-icon-wrap"><span class="dish-emoji">🔥</span></div>
         <div class="dish-card-body">
           <h3>كبدة إسكندراني حارة</h3>
           <p>كبدة بتلو طازجة مع الفلفل الحار والبهارات والليمون — على الجريل مباشرة، ساخنة وشهية</p>
@@ -1243,7 +1310,7 @@
         </div>
       </article>
       <article class="dish-card reveal">
-        <div class="dish-icon-wrap">🍲</div>
+        <div class="dish-icon-wrap"><span class="dish-emoji">🍲</span></div>
         <div class="dish-card-body">
           <h3>مسقعة وملوخية</h3>
           <p>مسقعة باذنجان بالصوص الأحمر والملوخية البلدي بالأرانب — طعم الأم المصرية</p>
@@ -1579,6 +1646,18 @@
 
           </div><!-- /reviews-track -->
   </div>
+
+  <!-- Navigation Buttons -->
+  <div class="container">
+    <div class="reviews-nav" aria-label="تنقل بين التقييمات">
+      <button class="reviews-nav-btn" id="reviewsPrev" aria-label="التقييم السابق">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+      <button class="reviews-nav-btn" id="reviewsNext" aria-label="التقييم التالي">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════
@@ -1882,6 +1961,37 @@ document.querySelectorAll('.faq-q').forEach(q => {
     reviewsHeader.style.transform = 'none';
     reviewsHeader.classList.add('visible');
   }
+
+  // ── Reviews prev/next buttons
+  const track = document.getElementById('reviewsTrack');
+  const prevBtn = document.getElementById('reviewsPrev');
+  const nextBtn = document.getElementById('reviewsNext');
+  const CARD_STEP = 320; // card width + gap
+
+  // Track manual offset separate from animation
+  let manualOffset = 0;
+  const totalWidth = track ? track.scrollWidth / 2 : 0;
+
+  function nudgeTrack(dir) {
+    if (!track) return;
+    // Pause animation temporarily
+    track.style.animationPlayState = 'paused';
+    manualOffset += dir * CARD_STEP;
+    // Clamp to loop range
+    if (manualOffset > 0) manualOffset = -totalWidth + CARD_STEP;
+    if (manualOffset < -totalWidth) manualOffset = 0;
+    track.style.transform = `translateX(${manualOffset}px)`;
+    track.style.transition = 'transform 0.5s cubic-bezier(.16,1,.3,1)';
+    // Resume animation after 2s of inactivity
+    clearTimeout(track._resumeTimer);
+    track._resumeTimer = setTimeout(() => {
+      track.style.transition = '';
+      track.style.animationPlayState = 'running';
+    }, 2000);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => nudgeTrack(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => nudgeTrack(1));
 })();
 
 
