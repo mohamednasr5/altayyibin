@@ -109,6 +109,75 @@
         }
         button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
         img { display: block; max-width: 100%; }
+        /* ---- Food SVG Icons ---- */
+        .item-svg-icon {
+            flex-shrink: 0;
+            width: 52px; height: 52px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .item-svg-icon svg {
+            width: 52px; height: 52px;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.13));
+            transition: transform 220ms cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .menu-item:hover .item-svg-icon svg {
+            transform: scale(1.13) rotate(-4deg);
+        }
+        /* specific animations */
+        @keyframes flame-flicker {
+            0%,100% { transform: scaleY(1) rotate(-2deg); }
+            50%      { transform: scaleY(1.1) rotate(2deg); }
+        }
+        @keyframes steam-rise {
+            0%   { opacity:0; transform: translateY(0) scaleX(1); }
+            50%  { opacity:.8; transform: translateY(-6px) scaleX(1.2); }
+            100% { opacity:0; transform: translateY(-12px) scaleX(.8); }
+        }
+        @keyframes drip {
+            0%,100%{ transform: translateY(0); }
+            50%    { transform: translateY(3px); }
+        }
+        @keyframes swim {
+            0%,100%{ transform: translateX(0) scaleX(1); }
+            50%    { transform: translateX(3px) scaleX(1.04); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        @keyframes bounce-light {
+            0%,100%{ transform: translateY(0); }
+            50%    { transform: translateY(-4px); }
+        }
+        @keyframes bread-puff {
+            0%,100%{ transform: scaleY(1); }
+            50%    { transform: scaleY(1.06); }
+        }
+        @keyframes leaf-sway {
+            0%,100%{ transform: rotate(-5deg); }
+            50%    { transform: rotate(5deg); }
+        }
+        @keyframes bubble-float {
+            0%,100%{ transform: translateY(0); opacity:.7; }
+            50%    { transform: translateY(-4px); opacity:1; }
+        }
+        @keyframes sweet-pulse {
+            0%,100%{ transform: scale(1); }
+            50%    { transform: scale(1.06); }
+        }
+        .anim-flame  { animation: flame-flicker 0.9s ease-in-out infinite; transform-origin: bottom center; }
+        .anim-steam  { animation: steam-rise 1.4s ease-in-out infinite; }
+        .anim-steam2 { animation: steam-rise 1.4s ease-in-out infinite 0.5s; }
+        .anim-steam3 { animation: steam-rise 1.4s ease-in-out infinite 0.9s; }
+        .anim-drip   { animation: drip 1.2s ease-in-out infinite; }
+        .anim-swim   { animation: swim 1.8s ease-in-out infinite; }
+        .anim-spin   { animation: spin-slow 4s linear infinite; transform-origin: center; }
+        .anim-bounce { animation: bounce-light 1.4s ease-in-out infinite; }
+        .anim-bread  { animation: bread-puff 1.6s ease-in-out infinite; }
+        .anim-leaf   { animation: leaf-sway 2s ease-in-out infinite; transform-origin: bottom center; }
+        .anim-bubble { animation: bubble-float 1.2s ease-in-out infinite; }
+        .anim-sweet  { animation: sweet-pulse 1.5s ease-in-out infinite; }
+
         ul { list-style: none; }
 
         /* =============================================
@@ -127,7 +196,7 @@
             text-decoration: none;
         }
         .brand-logo {
-            width: 54px; height: 54px; flex-shrink: 0; object-fit: contain;
+            width: 58px; height: 58px; flex-shrink: 0; object-fit: contain;
         }
         .brand-text { display: flex; flex-direction: column; }
         .brand-name {
@@ -144,6 +213,17 @@
             letter-spacing: 0.02em;
         }
         .header-actions { display: flex; gap: var(--space-2); align-items: center; }
+        .wa-share-btn {
+            color: #25D366 !important;
+            border-color: rgba(37,211,102,0.3) !important;
+            transition: all 180ms;
+        }
+        .wa-share-btn:hover {
+            background: rgba(37,211,102,0.1) !important;
+            border-color: #25D366 !important;
+            transform: scale(1.08);
+        }
+
         .icon-btn {
             width: 42px; height: 42px; border-radius: var(--radius-full);
             display: flex; align-items: center; justify-content: center;
@@ -685,6 +765,11 @@
             </div>
         </a>
         <div class="header-actions">
+            <a class="icon-btn wa-share-btn" href="https://wa.me/?text=هلا بالطيبين وأهل الطيبة حبينا نرشح لكم مطعم الطيبين للآكلات الشعبية المصرية . هذا أفضل مطعم مصري بمكة%0Aaltayyibin.com" target="_blank" rel="noopener" aria-label="مشاركة عبر واتساب">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+            </a>
             <button class="icon-btn" id="favsBtn" aria-label="المفضلة">
                 <i class="fas fa-heart"></i>
             </button>
@@ -850,6 +935,940 @@
         ]}
     ];
 
+
+    // ---- SVG Icon Map ----
+    const FOOD_SVGS = {
+      // === MEAT / GRILLS ===
+      'كباب حلة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="38" rx="18" ry="5" fill="#8B4513" opacity=".25"/>
+        <!-- skewer stick -->
+        <rect x="24" y="8" width="4" height="34" rx="2" fill="#c9962b"/>
+        <!-- meat chunks -->
+        <ellipse cx="26" cy="16" rx="7" ry="5" fill="#8B3A0F"/>
+        <ellipse cx="26" cy="24" rx="7" ry="5" fill="#A0440F"/>
+        <ellipse cx="26" cy="32" rx="7" ry="5" fill="#8B3A0F"/>
+        <!-- grill marks -->
+        <line x1="21" y1="14" x2="31" y2="18" stroke="#5C2200" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="21" y1="22" x2="31" y2="26" stroke="#5C2200" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- flame -->
+        <path class="anim-flame" d="M23 40 Q24 36 26 34 Q28 36 29 40 Q27 42 26 42 Q25 42 23 40Z" fill="#FF6B00" opacity=".85"/>
+        <path class="anim-flame" d="M24.5 40 Q25.5 37.5 26 36 Q26.5 37.5 27.5 40 Q26.5 41 26 41 Q25.5 41 24.5 40Z" fill="#FFD700" opacity=".7"/>
+      </svg>`,
+
+      'كفتة مشوية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="40" rx="16" ry="4" fill="#8B4513" opacity=".2"/>
+        <!-- stick -->
+        <rect x="24.5" y="6" width="3" height="36" rx="1.5" fill="#c9962b"/>
+        <!-- kofta shape -->
+        <ellipse cx="26" cy="22" rx="8" ry="14" fill="#7A3008"/>
+        <ellipse cx="26" cy="22" rx="6" ry="12" fill="#9B3D10"/>
+        <!-- texture lines -->
+        <line x1="20" y1="18" x2="32" y2="18" stroke="#5C2200" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+        <line x1="20" y1="22" x2="32" y2="22" stroke="#5C2200" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+        <line x1="20" y1="26" x2="32" y2="26" stroke="#5C2200" stroke-width="1" stroke-linecap="round" opacity=".5"/>
+        <path class="anim-flame" d="M22 42 Q24 38 26 36 Q28 38 30 42 Q28 44 26 44 Q24 44 22 42Z" fill="#FF6B00" opacity=".85"/>
+      </svg>`,
+
+      'ريش غنم مشوية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="42" rx="18" ry="4" fill="#8B4513" opacity=".18"/>
+        <!-- bone handle -->
+        <rect x="22" y="34" width="8" height="12" rx="4" fill="#E8DCC8"/>
+        <!-- rib meat -->
+        <path d="M14 12 Q18 8 26 10 Q34 8 38 12 Q38 28 26 32 Q14 28 14 12Z" fill="#9B3D10"/>
+        <path d="M16 14 Q20 11 26 13 Q32 11 36 14 Q36 26 26 30 Q16 26 16 14Z" fill="#B54A15"/>
+        <!-- grill marks -->
+        <line x1="18" y1="16" x2="34" y2="20" stroke="#6B2A00" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <line x1="18" y1="22" x2="34" y2="26" stroke="#6B2A00" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 8 Q20 4 22 1" stroke="#aaa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M26 6 Q24 2 26 0" stroke="#aaa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam3" d="M30 8 Q28 4 30 1" stroke="#aaa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'موزة مشوية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="16" ry="4" fill="#8B4513" opacity=".18"/>
+        <!-- big leg -->
+        <path d="M16 42 Q14 30 18 18 Q22 8 26 10 Q30 8 34 18 Q38 30 36 42Z" fill="#9B3D10"/>
+        <path d="M18 40 Q16 30 20 20 Q23 12 26 13 Q29 12 32 20 Q36 30 34 40Z" fill="#B54A15"/>
+        <!-- bone -->
+        <rect x="23" y="38" width="6" height="10" rx="3" fill="#E8DCC8"/>
+        <circle cx="26" cy="38" r="4" fill="#E8DCC8"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 12 Q18 7 20 4" stroke="#bbb" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M26 9 Q24 4 26 1" stroke="#bbb" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam3" d="M32 12 Q30 7 32 4" stroke="#bbb" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'شقف لحم': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- plate -->
+        <ellipse cx="26" cy="40" rx="18" ry="5" fill="#ddd" opacity=".5"/>
+        <!-- meat pieces -->
+        <rect x="12" y="22" width="12" height="8" rx="3" fill="#9B3D10" transform="rotate(-15 18 26)"/>
+        <rect x="28" y="20" width="12" height="8" rx="3" fill="#B54A15" transform="rotate(10 34 24)"/>
+        <rect x="20" y="30" width="10" height="7" rx="3" fill="#9B3D10" transform="rotate(5 25 33)"/>
+        <!-- grill marks -->
+        <line x1="12" y1="24" x2="22" y2="28" stroke="#5C2200" stroke-width="1.5" stroke-linecap="round" opacity=".5"/>
+        <path class="anim-flame" d="M18 40 Q21 36 24 34 Q27 36 30 40 Q27 43 24 43 Q21 43 18 40Z" fill="#FF6B00" opacity=".75"/>
+      </svg>`,
+
+      'طبق مشاوي مشكل': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- plate -->
+        <ellipse cx="26" cy="42" rx="20" ry="6" fill="#e8e0d0"/>
+        <ellipse cx="26" cy="40" rx="18" ry="5" fill="#f5f0e8"/>
+        <!-- kofta on stick -->
+        <rect x="8" y="18" width="2.5" height="24" rx="1.2" fill="#c9962b"/>
+        <ellipse cx="9.25" cy="26" rx="6" ry="10" fill="#9B3D10"/>
+        <!-- rib -->
+        <path d="M20 22 Q26 18 32 22 Q32 34 26 36 Q20 34 20 22Z" fill="#B54A15"/>
+        <rect x="23" y="34" width="6" height="8" rx="3" fill="#E8DCC8"/>
+        <!-- chicken wing -->
+        <path d="M33 28 Q38 22 44 24 Q44 32 38 34 Q34 34 33 28Z" fill="#D4821A"/>
+        <!-- flame -->
+        <path class="anim-flame" d="M20 44 Q24 40 26 38 Q28 40 32 44 Q29 47 26 47 Q23 47 20 44Z" fill="#FF6B00" opacity=".8"/>
+      </svg>`,
+
+      // === POULTRY ===
+      'فراخ مشوية كاملة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="19" ry="5" fill="#8B4513" opacity=".15"/>
+        <!-- whole chicken body -->
+        <ellipse cx="26" cy="28" rx="16" ry="14" fill="#D4821A"/>
+        <ellipse cx="26" cy="28" rx="13" ry="11" fill="#E8953A"/>
+        <!-- head -->
+        <circle cx="26" cy="14" r="6" fill="#D4821A"/>
+        <circle cx="28" cy="13" r="1.5" fill="#222"/>
+        <path d="M28 11 L31 10 L30 13Z" fill="#E85C00"/>
+        <!-- legs -->
+        <path d="M18 38 Q16 44 14 46" stroke="#C07020" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M34 38 Q36 44 38 46" stroke="#C07020" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- grill marks -->
+        <line x1="16" y1="24" x2="36" y2="28" stroke="#9B5C10" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+        <line x1="16" y1="30" x2="36" y2="34" stroke="#9B5C10" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 8 Q20 4 22 2" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 8 Q28 4 30 2" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'فراخ بانيه': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="17" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- schnitzel shape -->
+        <ellipse cx="26" cy="30" rx="17" ry="11" fill="#C8860A" transform="rotate(-8 26 30)"/>
+        <ellipse cx="26" cy="30" rx="14" ry="8.5" fill="#E8A830" transform="rotate(-8 26 30)"/>
+        <!-- breading dots -->
+        <circle cx="18" cy="27" r="1.2" fill="#B07010" opacity=".6"/>
+        <circle cx="24" cy="24" r="1" fill="#B07010" opacity=".6"/>
+        <circle cx="31" cy="26" r="1.2" fill="#B07010" opacity=".6"/>
+        <circle cx="22" cy="33" r="1" fill="#B07010" opacity=".6"/>
+        <circle cx="30" cy="33" r="1.2" fill="#B07010" opacity=".6"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 18 Q20 14 22 12" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 18 Q28 14 30 12" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'شاورما فراخ': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="14" ry="3.5" fill="#8B4513" opacity=".15"/>
+        <!-- bread wrap -->
+        <path d="M16 44 Q14 30 16 16 Q20 10 26 10 Q32 10 36 16 Q38 30 36 44Z" fill="#E8C875"/>
+        <path d="M18 44 Q16 30 18 18 Q22 13 26 13 Q30 13 34 18 Q36 30 34 44Z" fill="#F0D898"/>
+        <!-- chicken filling -->
+        <ellipse cx="26" cy="28" rx="9" ry="6" fill="#D4821A"/>
+        <!-- veggies -->
+        <rect x="20" y="34" width="3" height="8" rx="1.5" fill="#5CB85C"/>
+        <rect x="24.5" y="34" width="3" height="8" rx="1.5" fill="#FF6B6B"/>
+        <rect x="29" y="34" width="3" height="8" rx="1.5" fill="#FFA500"/>
+        <!-- top of wrap -->
+        <ellipse cx="26" cy="10" rx="10" ry="3" fill="#E8C875"/>
+      </svg>`,
+
+      'بفتيك فراخ': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="18" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- steak shape -->
+        <path d="M10 26 Q12 16 26 14 Q40 16 42 26 Q40 38 26 40 Q12 38 10 26Z" fill="#C8860A"/>
+        <path d="M13 26 Q15 18 26 17 Q37 18 39 26 Q37 36 26 37 Q15 36 13 26Z" fill="#E0981C"/>
+        <!-- grill marks -->
+        <line x1="15" y1="22" x2="37" y2="26" stroke="#9B6010" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+        <line x1="15" y1="28" x2="37" y2="32" stroke="#9B6010" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 14 Q18 10 20 7" stroke="#bbb" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M32 14 Q30 10 32 7" stroke="#bbb" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'أجنحة حارة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="18" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- wing 1 -->
+        <path d="M10 30 Q8 20 16 16 Q22 14 26 20 Q22 28 18 32 Q14 34 10 30Z" fill="#C04800"/>
+        <!-- wing 2 -->
+        <path d="M42 30 Q44 20 36 16 Q30 14 26 20 Q30 28 34 32 Q38 34 42 30Z" fill="#D45000"/>
+        <!-- sauce drips -->
+        <path class="anim-drip" d="M15 30 Q14 34 13 36" stroke="#FF3300" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8"/>
+        <path class="anim-drip" d="M37 30 Q38 34 39 36" stroke="#FF3300" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8"/>
+        <!-- hot pepper -->
+        <path d="M24 38 Q26 42 28 38 Q26 36 24 38Z" fill="#FF0000"/>
+        <line x1="26" y1="36" x2="26" y2="34" stroke="#2d8B00" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- flame small -->
+        <path class="anim-flame" d="M22 42 Q26 39 30 42 Q28 45 26 45 Q24 45 22 42Z" fill="#FF6B00" opacity=".7"/>
+      </svg>`,
+
+      // === SEAFOOD ===
+      'سمك مشوي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="18" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- fish body -->
+        <path class="anim-swim" d="M8 26 Q16 16 32 18 Q44 20 44 26 Q44 32 32 34 Q16 36 8 26Z" fill="#6BA3C8"/>
+        <!-- tail -->
+        <path d="M8 26 L2 20 L6 26 L2 32Z" fill="#5A90B5"/>
+        <!-- eye -->
+        <circle cx="36" cy="24" r="2.5" fill="#fff"/>
+        <circle cx="36.8" cy="24" r="1.2" fill="#222"/>
+        <!-- scales -->
+        <path d="M20 22 Q22 20 24 22" fill="none" stroke="#4A80A8" stroke-width="1" opacity=".6"/>
+        <path d="M24 26 Q26 24 28 26" fill="none" stroke="#4A80A8" stroke-width="1" opacity=".6"/>
+        <path d="M18 28 Q20 26 22 28" fill="none" stroke="#4A80A8" stroke-width="1" opacity=".6"/>
+        <!-- grill marks -->
+        <line x1="16" y1="21" x2="16" y2="31" stroke="#2A6A8A" stroke-width="1.8" stroke-linecap="round" opacity=".4"/>
+        <line x1="22" y1="19" x2="22" y2="33" stroke="#2A6A8A" stroke-width="1.8" stroke-linecap="round" opacity=".4"/>
+        <!-- lemon slice -->
+        <circle cx="40" cy="38" r="6" fill="#FFE066"/>
+        <line x1="40" y1="32" x2="40" y2="44" stroke="#E8C830" stroke-width="1"/>
+        <line x1="34" y1="38" x2="46" y2="38" stroke="#E8C830" stroke-width="1"/>
+      </svg>`,
+
+      'سمك مقلي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="18" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- fried fish body - curled -->
+        <path d="M10 34 Q12 20 22 16 Q34 12 40 20 Q46 28 38 36 Q30 44 18 42 Q10 40 10 34Z" fill="#D4A820"/>
+        <path d="M13 33 Q15 21 23 18 Q33 15 38 22 Q44 28 36 34 Q28 41 19 40 Q13 38 13 33Z" fill="#E8C030"/>
+        <!-- crispy texture -->
+        <circle cx="22" cy="24" r="1.5" fill="#C09010" opacity=".5"/>
+        <circle cx="30" cy="22" r="1.2" fill="#C09010" opacity=".5"/>
+        <circle cx="36" cy="28" r="1.5" fill="#C09010" opacity=".5"/>
+        <circle cx="20" cy="32" r="1" fill="#C09010" opacity=".5"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 14 Q20 10 22 8" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 14 Q28 10 30 8" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'جمبري مقلي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="16" ry="3.5" fill="#8B4513" opacity=".15"/>
+        <!-- shrimp body curved -->
+        <path d="M18 14 Q12 20 12 28 Q12 38 20 42 Q28 46 34 40 Q40 34 38 24 Q36 14 28 12 Q22 10 18 14Z" fill="#FF8C5A"/>
+        <path d="M20 16 Q15 22 15 28 Q15 36 22 40 Q29 44 34 38 Q39 32 37 24 Q35 16 28 15 Q23 13 20 16Z" fill="#FFA070"/>
+        <!-- segments -->
+        <path d="M16 24 Q28 22 38 26" fill="none" stroke="#FF6040" stroke-width="1" opacity=".5"/>
+        <path d="M15 30 Q27 28 38 32" fill="none" stroke="#FF6040" stroke-width="1" opacity=".5"/>
+        <!-- antennae -->
+        <line x1="22" y1="14" x2="14" y2="8" stroke="#FF8C5A" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="26" y1="13" x2="22" y2="6" stroke="#FF8C5A" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- tail -->
+        <path d="M32 40 Q36 44 38 46 Q34 46 30 44Z" fill="#FF6040"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M24 10 Q22 6 24 4" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'جمبري مشوي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="16" ry="3.5" fill="#8B4513" opacity=".15"/>
+        <path d="M18 14 Q12 20 12 28 Q12 38 20 42 Q28 46 34 40 Q40 34 38 24 Q36 14 28 12 Q22 10 18 14Z" fill="#E06030"/>
+        <path d="M20 16 Q15 22 15 28 Q15 36 22 40 Q29 44 34 38 Q39 32 37 24 Q35 16 28 15 Q23 13 20 16Z" fill="#F07840"/>
+        <!-- grill marks -->
+        <line x1="16" y1="24" x2="37" y2="28" stroke="#9B3010" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="15" y1="30" x2="37" y2="34" stroke="#9B3010" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+        <line x1="22" y1="14" x2="14" y2="8" stroke="#E06030" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M32 40 Q36 44 38 46 Q34 46 30 44Z" fill="#C04820"/>
+        <path class="anim-flame" d="M20 44 Q24 40 26 38 Q28 40 32 44 Q29 47 26 47 Q23 47 20 44Z" fill="#FF6B00" opacity=".7"/>
+      </svg>`,
+
+      'سلطعون حارة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="18" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- crab body -->
+        <ellipse cx="26" cy="28" rx="14" ry="11" fill="#E04020"/>
+        <ellipse cx="26" cy="28" rx="11" ry="8.5" fill="#F05030"/>
+        <!-- claws -->
+        <path d="M12 22 Q6 18 4 22 Q6 28 12 26Z" fill="#E04020"/>
+        <path d="M40 22 Q46 18 48 22 Q46 28 40 26Z" fill="#E04020"/>
+        <!-- legs -->
+        <line x1="14" y1="26" x2="6" y2="24" stroke="#E04020" stroke-width="2" stroke-linecap="round"/>
+        <line x1="14" y1="30" x2="6" y2="30" stroke="#E04020" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="26" x2="46" y2="24" stroke="#E04020" stroke-width="2" stroke-linecap="round"/>
+        <line x1="38" y1="30" x2="46" y2="30" stroke="#E04020" stroke-width="2" stroke-linecap="round"/>
+        <!-- eyes -->
+        <circle cx="20" cy="21" r="2.5" fill="#fff"/>
+        <circle cx="20.8" cy="21" r="1.2" fill="#111"/>
+        <circle cx="32" cy="21" r="2.5" fill="#fff"/>
+        <circle cx="32.8" cy="21" r="1.2" fill="#111"/>
+        <!-- hot pepper -->
+        <path d="M24 38 Q26 42 28 38 Q26 36 24 38Z" fill="#FF0000"/>
+        <path class="anim-drip" d="M26 36 Q25 38 26 40" stroke="#FF3300" stroke-width="2" stroke-linecap="round" fill="none" opacity=".8"/>
+      </svg>`,
+
+      'طبق بحري مشكل': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- plate -->
+        <ellipse cx="26" cy="40" rx="20" ry="6" fill="#e8e0d0"/>
+        <ellipse cx="26" cy="38" rx="18" ry="5" fill="#f5f0e8"/>
+        <!-- small fish -->
+        <path class="anim-swim" d="M8 30 Q14 24 22 26 Q28 28 26 32 Q20 36 12 34 Q6 32 8 30Z" fill="#6BA3C8"/>
+        <path d="M8 30 L4 26 L7 30 L4 34Z" fill="#5A90B5"/>
+        <!-- shrimp -->
+        <path d="M28 24 Q32 20 38 22 Q42 26 38 32 Q34 36 30 34 Q26 30 28 24Z" fill="#FF8C5A"/>
+        <!-- lemon -->
+        <circle cx="20" cy="40" r="5" fill="#FFE066"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 22 Q20 18 22 16" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 20 Q28 16 30 14" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      // === CLASSIC EGYPTIAN ===
+      'فول مدمس بالزيت الحار': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#D4B896"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#E8CCA8"/>
+        <!-- foul (beans) -->
+        <circle cx="20" cy="30" r="3.5" fill="#8B6340"/>
+        <circle cx="26" cy="28" r="3.5" fill="#9B7350"/>
+        <circle cx="32" cy="30" r="3.5" fill="#8B6340"/>
+        <circle cx="23" cy="35" r="3" fill="#9B7350"/>
+        <circle cx="29" cy="35" r="3" fill="#8B6340"/>
+        <!-- oil -->
+        <path class="anim-drip" d="M18 24 Q19 28 20 26" stroke="#FF8C00" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+        <!-- lemon -->
+        <circle cx="38" cy="38" r="5" fill="#FFE066"/>
+        <line x1="38" y1="33" x2="38" y2="43" stroke="#E8C830" stroke-width="1"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 20 Q20 16 22 14" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 20 Q28 16 30 14" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'فول بالطحينة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#D4B896"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#E8CCA8"/>
+        <circle cx="20" cy="30" r="3.5" fill="#8B6340"/>
+        <circle cx="26" cy="28" r="3.5" fill="#9B7350"/>
+        <circle cx="32" cy="30" r="3.5" fill="#8B6340"/>
+        <!-- tahini drizzle -->
+        <path class="anim-drip" d="M22 24 Q24 30 26 32 Q28 30 30 24" stroke="#E8D070" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+        <path class="anim-steam" d="M22 20 Q20 16 22 14" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'طعمية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="16" ry="4" fill="#8B4513" opacity=".2"/>
+        <!-- falafel balls -->
+        <circle cx="18" cy="28" r="8" fill="#5A8020"/>
+        <circle cx="18" cy="28" r="6.5" fill="#6A9828"/>
+        <circle cx="30" cy="30" r="7" fill="#5A8020"/>
+        <circle cx="30" cy="30" r="5.5" fill="#6A9828"/>
+        <circle cx="24" cy="20" r="6.5" fill="#5A8020"/>
+        <circle cx="24" cy="20" r="5" fill="#6A9828"/>
+        <!-- sesame dots -->
+        <circle cx="15" cy="25" r="0.8" fill="#E8D070"/>
+        <circle cx="18" cy="23" r="0.8" fill="#E8D070"/>
+        <circle cx="21" cy="25" r="0.8" fill="#E8D070"/>
+        <circle cx="27" cy="28" r="0.8" fill="#E8D070"/>
+        <circle cx="30" cy="26" r="0.8" fill="#E8D070"/>
+        <circle cx="22" cy="17" r="0.8" fill="#E8D070"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 12 Q18 8 20 6" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M28 12 Q26 8 28 6" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'كشري': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#D4B896"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#E8CCA8"/>
+        <!-- layers: rice -->
+        <ellipse cx="26" cy="34" rx="14" ry="4" fill="#F0E8C0"/>
+        <!-- pasta -->
+        <rect x="16" y="29" width="3" height="6" rx="1.5" fill="#E8C060"/>
+        <rect x="21" y="28" width="3" height="7" rx="1.5" fill="#E8C060"/>
+        <rect x="26" y="29" width="3" height="6" rx="1.5" fill="#E8C060"/>
+        <rect x="31" y="28" width="3" height="7" rx="1.5" fill="#E8C060"/>
+        <!-- tomato sauce -->
+        <path class="anim-drip" d="M20 24 Q22 28 26 26 Q30 24 32 26" stroke="#E03020" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <!-- crispy onion on top -->
+        <path d="M22 22 Q26 18 30 22 Q26 24 22 22Z" fill="#C07010"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 18 Q20 14 22 12" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 18 Q28 14 30 12" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'مُصَرة بالخل والتوم': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- small bowl -->
+        <path d="M10 28 Q10 44 26 44 Q42 44 42 28Z" fill="#C4A280"/>
+        <ellipse cx="26" cy="28" rx="16" ry="5" fill="#D8B890"/>
+        <!-- foul with onion -->
+        <circle cx="22" cy="34" r="3.5" fill="#8B6340"/>
+        <circle cx="28" cy="32" r="3.5" fill="#9B7350"/>
+        <circle cx="25" cy="38" r="3" fill="#8B6340"/>
+        <!-- garlic -->
+        <path d="M34 38 Q36 34 38 36 Q38 40 36 42 Q34 40 34 38Z" fill="#F5F0E0"/>
+        <line x1="36" y1="34" x2="36" y2="32" stroke="#90B040" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- vinegar drip -->
+        <path class="anim-drip" d="M20 26 Q21 30 22 28" stroke="#9B8060" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+      </svg>`,
+
+      'رِجلة بالخبز': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bread -->
+        <ellipse cx="26" cy="40" rx="18" ry="6" fill="#D4A030" transform="rotate(-5 26 40)"/>
+        <ellipse cx="26" cy="38" rx="16" ry="5" fill="#E8B840" transform="rotate(-5 26 38)"/>
+        <!-- purslane leaves -->
+        <path d="M14 28 Q16 22 20 24 Q18 28 14 28Z" fill="#3A9020"/>
+        <path d="M22 24 Q24 18 28 20 Q26 24 22 24Z" fill="#48A030"/>
+        <path d="M30 26 Q32 20 36 22 Q34 26 30 26Z" fill="#3A9020"/>
+        <path d="M18 32 Q20 26 24 28 Q22 32 18 32Z" fill="#48A030"/>
+        <path d="M28 30 Q30 24 34 26 Q32 30 28 30Z" fill="#3A9020"/>
+        <!-- vinegar drop -->
+        <path class="anim-drip" d="M26 20 Q25 24 26 26" stroke="#9B8060" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+      </svg>`,
+
+      'شوربة عدس': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 46 26 46 Q44 46 44 26Z" fill="#C88820"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#E0A830"/>
+        <!-- soup surface -->
+        <ellipse cx="26" cy="28" rx="14" ry="4" fill="#F0C040" opacity=".7"/>
+        <!-- lemon slice -->
+        <circle cx="26" cy="27" r="5" fill="#FFE066"/>
+        <line x1="26" y1="22" x2="26" y2="32" stroke="#E8C830" stroke-width="1"/>
+        <line x1="21" y1="27" x2="31" y2="27" stroke="#E8C830" stroke-width="1"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M18 20 Q16 14 18 10" stroke="#ddd" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M26 18 Q24 12 26 8" stroke="#ddd" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam3" d="M34 20 Q32 14 34 10" stroke="#ddd" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'ملوخية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#2A7A10"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#38920A"/>
+        <!-- surface -->
+        <ellipse cx="26" cy="28" rx="14" ry="4" fill="#4AA020" opacity=".8"/>
+        <!-- rice on side -->
+        <ellipse cx="12" cy="38" rx="6" ry="4" fill="#F0E8C0"/>
+        <!-- chicken piece -->
+        <path d="M36 32 Q42 28 44 32 Q44 38 38 38 Q34 38 36 32Z" fill="#D4821A"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 20 Q18 15 20 12" stroke="#8BC870" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M28 18 Q26 13 28 10" stroke="#8BC870" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      // === SANDWICHES ===
+      'سندوتش فول': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="16" ry="3" fill="#8B4513" opacity=".15"/>
+        <!-- bread bottom -->
+        <path d="M10 36 Q10 44 26 44 Q42 44 42 36Z" fill="#E8B840"/>
+        <!-- filling -->
+        <rect x="12" y="30" width="28" height="8" rx="2" fill="#9B7350"/>
+        <!-- foul visible -->
+        <circle cx="18" cy="34" r="2.5" fill="#7A5030"/>
+        <circle cx="24" cy="33" r="2.5" fill="#7A5030"/>
+        <circle cx="30" cy="34" r="2.5" fill="#7A5030"/>
+        <!-- oil drip -->
+        <path class="anim-drip" d="M22 30 Q23 33 22 35" stroke="#FF8C00" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".8"/>
+        <!-- bread top -->
+        <path class="anim-bread" d="M10 30 Q10 22 26 20 Q42 22 42 30Z" fill="#F0C850"/>
+        <ellipse cx="26" cy="30" rx="16" ry="3.5" fill="#F8D870"/>
+      </svg>`,
+
+      'سندوتش طعمية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="16" ry="3" fill="#8B4513" opacity=".15"/>
+        <path d="M10 36 Q10 44 26 44 Q42 44 42 36Z" fill="#E8B840"/>
+        <!-- falafel -->
+        <circle cx="18" cy="34" r="5" fill="#5A8020"/>
+        <circle cx="26" cy="32" r="5" fill="#5A8020"/>
+        <circle cx="34" cy="34" r="5" fill="#5A8020"/>
+        <!-- salad -->
+        <path d="M14 30 Q26 26 38 30" fill="none" stroke="#5CB85C" stroke-width="2" stroke-linecap="round"/>
+        <!-- tomato slice -->
+        <circle cx="26" cy="28" r="4" fill="#E03020" opacity=".7"/>
+        <path class="anim-bread" d="M10 30 Q10 22 26 20 Q42 22 42 30Z" fill="#F0C850"/>
+        <ellipse cx="26" cy="30" rx="16" ry="3.5" fill="#F8D870"/>
+      </svg>`,
+
+      'سندوتش شاورما فراخ': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="14" ry="3" fill="#8B4513" opacity=".15"/>
+        <!-- wrap -->
+        <path d="M16 44 Q14 28 18 16 Q22 12 26 12 Q30 12 34 16 Q38 28 36 44Z" fill="#F0D898"/>
+        <!-- chicken shreds -->
+        <path d="M18 28 Q22 24 26 26 Q30 24 34 28" fill="none" stroke="#D4821A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 32 Q22 28 26 30 Q30 28 34 32" fill="none" stroke="#D4821A" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- veggies -->
+        <rect x="20" y="34" width="3" height="8" rx="1.5" fill="#5CB85C"/>
+        <rect x="24.5" y="34" width="3" height="8" rx="1.5" fill="#E03020"/>
+        <rect x="29" y="34" width="3" height="8" rx="1.5" fill="#FFA500"/>
+        <!-- tahini drizzle -->
+        <path class="anim-drip" d="M24 24 Q25 28 26 30" stroke="#E8D070" stroke-width="2" fill="none" stroke-linecap="round" opacity=".9"/>
+      </svg>`,
+
+      'سندوتش شاورما لحم': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="14" ry="3" fill="#8B4513" opacity=".15"/>
+        <path d="M16 44 Q14 28 18 16 Q22 12 26 12 Q30 12 34 16 Q38 28 36 44Z" fill="#F0D898"/>
+        <!-- meat shreds -->
+        <path d="M18 28 Q22 24 26 26 Q30 24 34 28" fill="none" stroke="#9B3D10" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 32 Q22 28 26 30 Q30 28 34 32" fill="none" stroke="#9B3D10" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- veggies -->
+        <rect x="20" y="34" width="3" height="8" rx="1.5" fill="#5CB85C"/>
+        <rect x="24.5" y="34" width="3" height="8" rx="1.5" fill="#E03020"/>
+        <rect x="29" y="34" width="3" height="8" rx="1.5" fill="#FFA500"/>
+        <path class="anim-drip" d="M24 24 Q25 28 26 30" stroke="#C04020" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+      </svg>`,
+
+      'سندوتش كباب': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="16" ry="3" fill="#8B4513" opacity=".15"/>
+        <path d="M10 36 Q10 44 26 44 Q42 44 42 36Z" fill="#E8B840"/>
+        <!-- kabab -->
+        <ellipse cx="26" cy="33" rx="12" ry="7" fill="#9B3D10"/>
+        <!-- texture lines -->
+        <line x1="16" y1="31" x2="36" y2="35" stroke="#6B1800" stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
+        <line x1="16" y1="35" x2="36" y2="33" stroke="#6B1800" stroke-width="1.5" stroke-linecap="round" opacity=".45"/>
+        <path class="anim-steam" d="M20 26 Q18 22 20 20" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-bread" d="M10 30 Q10 22 26 20 Q42 22 42 30Z" fill="#F0C850"/>
+        <ellipse cx="26" cy="30" rx="16" ry="3.5" fill="#F8D870"/>
+      </svg>`,
+
+      'سندوتش هامبرجر': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="17" ry="3.5" fill="#8B4513" opacity=".15"/>
+        <!-- bun bottom -->
+        <path d="M9 40 Q9 46 26 46 Q43 46 43 40Z" fill="#E8B840"/>
+        <!-- lettuce -->
+        <path d="M8 38 Q14 34 20 38 Q26 34 32 38 Q38 34 44 38" fill="none" stroke="#5CB85C" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- tomato -->
+        <rect x="12" y="32" width="28" height="4" rx="2" fill="#E03020" opacity=".85"/>
+        <!-- cheese -->
+        <rect x="10" y="28" width="32" height="4" rx="1" fill="#F5C518"/>
+        <!-- patty -->
+        <rect x="11" y="22" width="30" height="8" rx="4" fill="#6B3010"/>
+        <rect x="11" y="22" width="30" height="8" rx="4" fill="none" stroke="#4A1800" stroke-width="1" opacity=".4"/>
+        <!-- bun top -->
+        <path class="anim-bread" d="M9 22 Q9 10 26 10 Q43 10 43 22Z" fill="#F0C850"/>
+        <ellipse cx="26" cy="22" rx="17" ry="4" fill="#F8D870"/>
+        <!-- sesame -->
+        <ellipse cx="22" cy="16" rx="2" ry="1" fill="#E8B050" transform="rotate(-15 22 16)"/>
+        <ellipse cx="28" cy="14" rx="2" ry="1" fill="#E8B050" transform="rotate(10 28 14)"/>
+        <ellipse cx="34" cy="16" rx="2" ry="1" fill="#E8B050" transform="rotate(-5 34 16)"/>
+      </svg>`,
+
+      'سندوتش جبن': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="16" ry="3" fill="#8B4513" opacity=".15"/>
+        <path d="M10 36 Q10 44 26 44 Q42 44 42 36Z" fill="#E8B840"/>
+        <!-- cheese slices -->
+        <rect x="11" y="28" width="30" height="6" rx="1" fill="#F5C518"/>
+        <rect x="11" y="32" width="30" height="4" rx="1" fill="#E8B010" opacity=".7"/>
+        <!-- melted cheese drip -->
+        <path class="anim-drip" d="M16 34 Q15 38 14 40" stroke="#F5C518" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-drip" d="M36 34 Q37 38 38 40" stroke="#F5C518" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-bread" d="M10 30 Q10 22 26 20 Q42 22 42 30Z" fill="#F0C850"/>
+        <ellipse cx="26" cy="30" rx="16" ry="3.5" fill="#F8D870"/>
+      </svg>`,
+
+      // === SIDES / SALADS ===
+      'سلطة خضراء': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#D4EAC4"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#E8F4D8"/>
+        <!-- lettuce -->
+        <path class="anim-leaf" d="M14 30 Q16 22 22 24 Q18 30 14 30Z" fill="#5CB85C"/>
+        <path class="anim-leaf" d="M22 28 Q24 20 30 22 Q26 28 22 28Z" fill="#48A030"/>
+        <path class="anim-leaf" d="M30 30 Q32 22 38 24 Q34 30 30 30Z" fill="#5CB85C"/>
+        <!-- tomato -->
+        <circle cx="18" cy="36" r="5" fill="#E03020"/>
+        <circle cx="34" cy="36" r="5" fill="#E03020"/>
+        <!-- cucumber -->
+        <ellipse cx="26" cy="36" rx="4" ry="6" fill="#5CB85C"/>
+        <line x1="26" y1="30" x2="26" y2="42" stroke="#3A8020" stroke-width="1" opacity=".5"/>
+      </svg>`,
+
+      'سلطة طحينة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#E8D898"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#F5EAB0"/>
+        <!-- tahini surface -->
+        <ellipse cx="26" cy="30" rx="14" ry="5" fill="#E8D070" opacity=".8"/>
+        <!-- swirl -->
+        <path class="anim-spin" d="M26 28 Q30 26 28 30 Q26 34 22 32 Q18 30 22 26 Q26 22 30 26" fill="none" stroke="#C0A010" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+        <!-- cumin dots -->
+        <circle cx="22" cy="28" r="1" fill="#6B4010"/>
+        <circle cx="26" cy="30" r="1" fill="#6B4010"/>
+        <circle cx="30" cy="28" r="1" fill="#6B4010"/>
+        <!-- lemon -->
+        <circle cx="38" cy="38" r="5" fill="#FFE066"/>
+        <!-- olive oil -->
+        <path class="anim-drip" d="M24 22 Q25 26 26 28" stroke="#C8A820" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+      </svg>`,
+
+      'سلطة زبادي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#F0F0F0"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#FAFAFA"/>
+        <!-- yogurt surface -->
+        <ellipse cx="26" cy="30" rx="14" ry="5" fill="#FFFFFF" opacity=".9"/>
+        <!-- cucumber -->
+        <circle cx="20" cy="32" r="4" fill="#5CB85C"/>
+        <circle cx="32" cy="32" r="4" fill="#5CB85C"/>
+        <!-- mint leaf -->
+        <path class="anim-leaf" d="M24 28 Q26 24 28 28 Q26 30 24 28Z" fill="#3A9020"/>
+        <!-- garlic -->
+        <path d="M24 36 Q26 32 28 36 Q26 38 24 36Z" fill="#F5F0E0"/>
+      </svg>`,
+
+      'مخللات مشكلة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- jar -->
+        <path d="M14 16 Q10 18 10 36 Q10 44 26 44 Q42 44 42 36 Q42 18 38 16Z" fill="#C8D870" opacity=".8"/>
+        <rect x="16" y="12" width="20" height="6" rx="3" fill="#9B9B9B"/>
+        <!-- veggies inside -->
+        <rect x="16" y="24" width="4" height="14" rx="2" fill="#5CB85C"/>
+        <rect x="22" y="22" width="4" height="16" rx="2" fill="#FF8C00"/>
+        <rect x="28" y="24" width="4" height="14" rx="2" fill="#E8E0C0"/>
+        <rect x="34" y="22" width="4" height="16" rx="2" fill="#E03060"/>
+        <!-- brine bubbles -->
+        <circle class="anim-bubble" cx="18" cy="20" r="1.5" fill="#fff" opacity=".6"/>
+        <circle class="anim-bubble" cx="26" cy="18" r="1" fill="#fff" opacity=".5"/>
+        <circle class="anim-bubble" cx="34" cy="20" r="1.5" fill="#fff" opacity=".6"/>
+      </svg>`,
+
+      'بصارة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#8BC870"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#A0D880"/>
+        <!-- green paste surface -->
+        <ellipse cx="26" cy="30" rx="14" ry="5" fill="#70B850" opacity=".9"/>
+        <!-- olive oil drizzle -->
+        <path class="anim-drip" d="M22 24 Q24 28 26 30 Q28 28 30 24" stroke="#C8A820" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <!-- cumin -->
+        <circle cx="22" cy="30" r="1" fill="#6B4010"/>
+        <circle cx="26" cy="32" r="1" fill="#6B4010"/>
+        <circle cx="30" cy="30" r="1" fill="#6B4010"/>
+        <path class="anim-steam" d="M22 20 Q20 16 22 14" stroke="#8BC870" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'حواوشي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="17" ry="3.5" fill="#8B4513" opacity=".15"/>
+        <!-- bread pocket -->
+        <path d="M9 32 Q9 44 26 44 Q43 44 43 32 Q43 18 26 18 Q9 18 9 32Z" fill="#E8C060"/>
+        <path d="M11 32 Q11 42 26 42 Q41 42 41 32 Q41 20 26 20 Q11 20 11 32Z" fill="#F0D078"/>
+        <!-- meat filling visible -->
+        <ellipse cx="26" cy="32" rx="12" ry="7" fill="#7A3008" opacity=".8"/>
+        <!-- onion pieces -->
+        <path d="M20 30 Q22 28 24 30 Q22 32 20 30Z" fill="#F5DCA0" opacity=".7"/>
+        <path d="M28 30 Q30 28 32 30 Q30 32 28 30Z" fill="#F5DCA0" opacity=".7"/>
+        <!-- peppers -->
+        <path d="M24 34 Q26 32 28 34 Q26 36 24 34Z" fill="#E03020" opacity=".7"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 16 Q18 12 20 10" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M32 16 Q30 12 32 10" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'خبز بلدي طازج': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="18" ry="4" fill="#8B4513" opacity=".15"/>
+        <!-- bread stack -->
+        <ellipse cx="26" cy="38" rx="18" ry="5" fill="#D4A030"/>
+        <ellipse cx="26" cy="34" rx="18" ry="5" fill="#E8B840"/>
+        <ellipse class="anim-bread" cx="26" cy="30" rx="18" ry="5" fill="#F0C850"/>
+        <!-- top bread -->
+        <ellipse cx="26" cy="26" rx="16" ry="4" fill="#F8D870"/>
+        <!-- texture -->
+        <ellipse cx="26" cy="26" rx="8" ry="2" fill="#E8C060" opacity=".5"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M18 20 Q16 14 18 10" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M26 18 Q24 12 26 8" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam3" d="M34 20 Q32 14 34 10" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'أرز أبيض': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#E8E0D0"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#F5F0E8"/>
+        <!-- rice mound -->
+        <ellipse cx="26" cy="30" rx="14" ry="4" fill="#FAFAF0"/>
+        <!-- rice grains -->
+        <ellipse cx="20" cy="28" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(-20 20 28)"/>
+        <ellipse cx="24" cy="26" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(10 24 26)"/>
+        <ellipse cx="28" cy="27" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(-30 28 27)"/>
+        <ellipse cx="32" cy="28" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(15 32 28)"/>
+        <ellipse cx="22" cy="32" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(-10 22 32)"/>
+        <ellipse cx="26" cy="33" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(20 26 33)"/>
+        <ellipse cx="30" cy="32" rx="1.5" ry="1" fill="#FFFFF0" transform="rotate(-25 30 32)"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 20 Q20 16 22 14" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 20 Q28 16 30 14" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      // === DRINKS ===
+      'عصير قصب': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- glass -->
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="#A8D870" opacity=".7"/>
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="none" stroke="#88C040" stroke-width="1.5"/>
+        <!-- liquid level -->
+        <path d="M15 20 Q13 42 26 42 Q39 42 37 20Z" fill="#C8E890" opacity=".85"/>
+        <!-- straw -->
+        <rect x="30" y="6" width="3" height="32" rx="1.5" fill="#FF8C5A"/>
+        <!-- ice cubes -->
+        <rect x="16" y="30" width="6" height="6" rx="1" fill="#E0F0FF" opacity=".7"/>
+        <rect x="24" y="28" width="6" height="6" rx="1" fill="#E0F0FF" opacity=".7"/>
+        <!-- sugarcane pieces floating -->
+        <rect x="18" y="22" width="8" height="3" rx="1.5" fill="#8BC040"/>
+        <circle class="anim-bubble" cx="20" cy="36" r="2" fill="#fff" opacity=".5"/>
+        <circle class="anim-bubble" cx="28" cy="34" r="1.5" fill="#fff" opacity=".5"/>
+      </svg>`,
+
+      'عصير برتقال': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="#FF8C00" opacity=".6"/>
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="none" stroke="#E07800" stroke-width="1.5"/>
+        <path d="M15 20 Q13 42 26 42 Q39 42 37 20Z" fill="#FFA030" opacity=".85"/>
+        <!-- straw -->
+        <rect x="30" y="6" width="3" height="32" rx="1.5" fill="#FF4040"/>
+        <!-- orange slice decoration -->
+        <circle cx="16" cy="14" r="6" fill="#FF8C00"/>
+        <circle cx="16" cy="14" r="4.5" fill="#FFA030"/>
+        <line x1="16" y1="8" x2="16" y2="20" stroke="#E07800" stroke-width="1"/>
+        <line x1="10" y1="14" x2="22" y2="14" stroke="#E07800" stroke-width="1"/>
+        <circle class="anim-bubble" cx="20" cy="36" r="2" fill="#fff" opacity=".5"/>
+        <circle class="anim-bubble" cx="28" cy="32" r="1.5" fill="#fff" opacity=".4"/>
+      </svg>`,
+
+      'عصير ليمون بالنعناع': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="#E8F870" opacity=".6"/>
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="none" stroke="#C8D820" stroke-width="1.5"/>
+        <path d="M15 20 Q13 42 26 42 Q39 42 37 20Z" fill="#F0FC80" opacity=".85"/>
+        <!-- mint leaves -->
+        <path class="anim-leaf" d="M22 16 Q24 12 26 16 Q24 18 22 16Z" fill="#3A9020"/>
+        <path class="anim-leaf" d="M26 14 Q28 10 30 14 Q28 16 26 14Z" fill="#48A030"/>
+        <!-- lemon -->
+        <circle cx="38" cy="14" r="6" fill="#FFE066"/>
+        <!-- straw -->
+        <rect x="16" y="6" width="3" height="32" rx="1.5" fill="#5CB85C"/>
+        <!-- ice -->
+        <rect x="24" y="30" width="6" height="6" rx="1" fill="#E0F0FF" opacity=".7"/>
+        <circle class="anim-bubble" cx="22" cy="38" r="2" fill="#fff" opacity=".5"/>
+      </svg>`,
+
+      'كركديه': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="#D03060" opacity=".6"/>
+        <path d="M14 16 Q12 44 26 44 Q40 44 38 16Z" fill="none" stroke="#A02040" stroke-width="1.5"/>
+        <path d="M15 20 Q13 42 26 42 Q39 42 37 20Z" fill="#E84070" opacity=".85"/>
+        <!-- hibiscus flower on top -->
+        <path d="M26 12 Q28 8 32 10 Q30 14 26 12Z" fill="#E03060"/>
+        <path d="M26 12 Q22 8 20 10 Q22 14 26 12Z" fill="#C02040"/>
+        <path d="M26 12 Q24 8 26 6 Q28 8 26 12Z" fill="#E03060"/>
+        <circle cx="26" cy="12" r="2" fill="#FFD700"/>
+        <!-- steam for hot version -->
+        <path class="anim-steam" d="M20 14 Q18 10 20 8" stroke="#E84070" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".6"/>
+        <circle class="anim-bubble" cx="20" cy="36" r="2" fill="#fff" opacity=".4"/>
+      </svg>`,
+
+      'شاي باللبن': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- cup -->
+        <path d="M12 22 Q10 44 26 44 Q42 44 40 22Z" fill="#C88048" opacity=".8"/>
+        <rect x="12" y="18" width="28" height="6" rx="2" fill="#D09060"/>
+        <!-- handle -->
+        <path d="M40 26 Q48 26 48 32 Q48 38 40 38" fill="none" stroke="#C08050" stroke-width="3" stroke-linecap="round"/>
+        <!-- liquid surface (milky tea) -->
+        <ellipse cx="26" cy="22" rx="14" ry="4" fill="#E8C090"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M18 16 Q16 10 18 6" stroke="#C88048" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path class="anim-steam2" d="M26 14 Q24 8 26 4" stroke="#C88048" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path class="anim-steam3" d="M34 16 Q32 10 34 6" stroke="#C88048" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+      </svg>`,
+
+      'قهوة سادة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- small cup -->
+        <path d="M14 28 Q12 44 26 44 Q40 44 38 28Z" fill="#4A2800" opacity=".9"/>
+        <rect x="14" y="24" width="24" height="6" rx="2" fill="#5A3010"/>
+        <!-- handle -->
+        <path d="M38 30 Q46 30 46 36 Q46 42 38 42" fill="none" stroke="#4A2800" stroke-width="3" stroke-linecap="round"/>
+        <!-- saucer -->
+        <ellipse cx="26" cy="46" rx="18" ry="3" fill="#7A5030"/>
+        <!-- coffee surface -->
+        <ellipse cx="26" cy="27" rx="12" ry="3.5" fill="#3A1A00"/>
+        <!-- cardamom pod -->
+        <ellipse cx="32" cy="24" r="3" fill="#8BC040" transform="rotate(30 32 24)"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 22 Q18 16 20 12" stroke="#8B6040" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path class="anim-steam2" d="M26 20 Q24 14 26 10" stroke="#8B6040" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path class="anim-steam3" d="M32 22 Q30 16 32 12" stroke="#8B6040" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+      </svg>`,
+
+      'نسكافيه': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 22 Q10 44 26 44 Q42 44 40 22Z" fill="#7A4820" opacity=".85"/>
+        <rect x="12" y="18" width="28" height="6" rx="2" fill="#8B5430"/>
+        <path d="M40 26 Q48 26 48 32 Q48 38 40 38" fill="none" stroke="#7A4820" stroke-width="3" stroke-linecap="round"/>
+        <!-- foam -->
+        <ellipse cx="26" cy="22" rx="14" ry="4" fill="#E8D0A8"/>
+        <!-- latte art swirl -->
+        <path d="M20 22 Q22 20 26 22 Q30 20 32 22" fill="none" stroke="#C8A870" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M18 16 Q16 10 18 6" stroke="#9B7050" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+        <path class="anim-steam2" d="M26 14 Q24 8 26 4" stroke="#9B7050" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7"/>
+      </svg>`,
+
+      'مشروبات غازية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- can shape -->
+        <rect x="14" y="10" width="24" height="36" rx="5" fill="#E03020"/>
+        <rect x="14" y="10" width="24" height="8" rx="5" fill="#C02010"/>
+        <rect x="14" y="38" width="24" height="8" rx="5" fill="#C02010"/>
+        <!-- tab -->
+        <path d="M24 12 Q26 8 28 12" fill="none" stroke="#E8E8E8" stroke-width="2" stroke-linecap="round"/>
+        <!-- bubbles -->
+        <circle class="anim-bubble" cx="20" cy="30" r="2" fill="#fff" opacity=".4"/>
+        <circle class="anim-bubble" cx="26" cy="26" r="1.5" fill="#fff" opacity=".4"/>
+        <circle class="anim-bubble" cx="32" cy="32" r="2" fill="#fff" opacity=".4"/>
+        <circle class="anim-bubble" cx="24" cy="36" r="1.5" fill="#fff" opacity=".3"/>
+        <!-- logo line -->
+        <rect x="18" y="22" width="16" height="3" rx="1.5" fill="#fff" opacity=".3"/>
+      </svg>`,
+
+      'ماء معدني': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bottle -->
+        <path d="M20 12 Q18 16 18 22 Q14 24 14 36 Q14 44 26 44 Q38 44 38 36 Q38 24 34 22 Q34 16 32 12Z" fill="#C8E8F8" opacity=".7"/>
+        <path d="M20 12 Q18 16 18 22 Q14 24 14 36 Q14 44 26 44 Q38 44 38 36 Q38 24 34 22 Q34 16 32 12Z" fill="none" stroke="#A8D0E8" stroke-width="1.5"/>
+        <!-- cap -->
+        <rect x="20" y="8" width="12" height="6" rx="3" fill="#3090E0"/>
+        <!-- label -->
+        <rect x="16" y="28" width="20" height="10" rx="2" fill="#fff" opacity=".6"/>
+        <!-- water level -->
+        <path d="M16 34 Q16 42 26 42 Q36 42 36 34Z" fill="#80C8F0" opacity=".5"/>
+        <!-- bubbles -->
+        <circle class="anim-bubble" cx="20" cy="34" r="1.5" fill="#fff" opacity=".6"/>
+        <circle class="anim-bubble" cx="26" cy="30" r="1" fill="#fff" opacity=".5"/>
+        <circle class="anim-bubble" cx="32" cy="36" r="1.5" fill="#fff" opacity=".6"/>
+      </svg>`,
+
+      // === DESSERTS ===
+      'كنافة نابلسي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="18" ry="4" fill="#C88020" opacity=".2"/>
+        <!-- base layer (orange pastry) -->
+        <ellipse cx="26" cy="36" rx="18" ry="7" fill="#E8A020"/>
+        <ellipse cx="26" cy="34" rx="16" ry="6" fill="#F0B840"/>
+        <!-- cheese filling visible -->
+        <ellipse cx="26" cy="30" rx="14" ry="5" fill="#FFFCE0"/>
+        <!-- top crunchy layer -->
+        <ellipse class="anim-sweet" cx="26" cy="24" rx="16" ry="6" fill="#E8920A"/>
+        <!-- shredded pastry texture -->
+        <path d="M14 22 Q18 20 22 22 Q26 20 30 22 Q34 20 38 22" fill="none" stroke="#C07010" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+        <path d="M14 24 Q18 22 22 24 Q26 22 30 24 Q34 22 38 24" fill="none" stroke="#C07010" stroke-width="1.5" stroke-linecap="round" opacity=".6"/>
+        <!-- syrup drip -->
+        <path class="anim-drip" d="M18 28 Q17 32 16 34" stroke="#E8A020" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <path class="anim-drip" d="M34 28 Q35 32 36 34" stroke="#E8A020" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <!-- pistachio top -->
+        <circle cx="22" cy="22" r="2" fill="#5A8020"/>
+        <circle cx="26" cy="20" r="2" fill="#6A9030"/>
+        <circle cx="30" cy="22" r="2" fill="#5A8020"/>
+      </svg>`,
+
+      'بسبوسة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="16" ry="4" fill="#C88020" opacity=".2"/>
+        <!-- piece of basbousa -->
+        <path d="M10 26 L26 14 L42 26 L38 44 L14 44Z" fill="#D4A030"/>
+        <path d="M12 26 L26 16 L40 26 L37 43 L15 43Z" fill="#E8B840"/>
+        <!-- diamond cut lines -->
+        <line x1="26" y1="14" x2="26" y2="44" stroke="#C09010" stroke-width="1" opacity=".4"/>
+        <line x1="14" y1="30" x2="38" y2="30" stroke="#C09010" stroke-width="1" opacity=".4"/>
+        <!-- coconut sprinkles -->
+        <rect x="18" y="22" width="4" height="1.5" rx="0.75" fill="#fff" opacity=".6" transform="rotate(-20 20 22)"/>
+        <rect x="25" y="20" width="4" height="1.5" rx="0.75" fill="#fff" opacity=".6" transform="rotate(10 27 20)"/>
+        <rect x="30" y="24" width="4" height="1.5" rx="0.75" fill="#fff" opacity=".6" transform="rotate(-15 32 24)"/>
+        <!-- syrup drip -->
+        <path class="anim-drip" d="M18 40 Q17 44 16 46" stroke="#E8A020" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+        <!-- pistachio -->
+        <circle cx="26" cy="28" r="3" fill="#5A8020"/>
+        <circle cx="26" cy="28" r="2" fill="#6A9030"/>
+      </svg>`,
+
+      'أم علي': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- baking dish -->
+        <path d="M8 28 Q8 44 26 44 Q44 44 44 28Z" fill="#C08840" opacity=".7"/>
+        <rect x="8" y="24" width="36" height="6" rx="2" fill="#D09850"/>
+        <!-- golden top -->
+        <ellipse class="anim-sweet" cx="26" cy="26" rx="18" ry="5" fill="#E8B840"/>
+        <!-- nuts on top -->
+        <ellipse cx="16" cy="24" rx="3" ry="2" fill="#8B6320"/>
+        <ellipse cx="24" cy="23" rx="3" ry="2" fill="#9B7330"/>
+        <ellipse cx="32" cy="24" rx="3" ry="2" fill="#8B6320"/>
+        <!-- raisins -->
+        <circle cx="20" cy="26" r="1.5" fill="#6B3020"/>
+        <circle cx="28" cy="26" r="1.5" fill="#6B3020"/>
+        <circle cx="36" cy="25" r="1.5" fill="#6B3020"/>
+        <!-- cream visible on side -->
+        <path class="anim-drip" d="M10 28 Q9 32 8 36" stroke="#FFFFF0" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".8"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M20 18 Q18 12 20 8" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M32 18 Q30 12 32 8" stroke="#ddd" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+
+      'قشطة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- bowl -->
+        <path d="M8 26 Q8 44 26 44 Q44 44 44 26Z" fill="#E8D0B0"/>
+        <ellipse cx="26" cy="26" rx="18" ry="6" fill="#F5E8C8"/>
+        <!-- cream surface -->
+        <ellipse class="anim-sweet" cx="26" cy="28" rx="14" ry="5" fill="#FFFDE8"/>
+        <!-- honey drizzle -->
+        <path class="anim-drip" d="M22 24 Q24 28 26 30 Q28 28 30 24" stroke="#E8A020" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <!-- nuts -->
+        <circle cx="18" cy="30" r="2.5" fill="#8B6320"/>
+        <circle cx="34" cy="30" r="2.5" fill="#8B6320"/>
+        <circle cx="26" cy="34" r="2.5" fill="#9B7330"/>
+      </svg>`,
+
+      'مهلبية': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <!-- small glass -->
+        <path d="M14 18 Q12 44 26 44 Q40 44 38 18Z" fill="#E8E0D8" opacity=".8"/>
+        <rect x="14" y="14" width="24" height="6" rx="2" fill="#D8D0C8"/>
+        <!-- milk pudding surface -->
+        <ellipse cx="26" cy="18" rx="12" ry="3.5" fill="#FAFAF5"/>
+        <!-- rose water decorations -->
+        <path d="M22 18 Q24 14 26 18 Q28 14 30 18 Q28 20 26 20 Q24 20 22 18Z" fill="#FFB0C0" opacity=".7"/>
+        <!-- crushed pistachios -->
+        <circle cx="20" cy="20" r="1.5" fill="#5A8020" opacity=".7"/>
+        <circle cx="32" cy="20" r="1.5" fill="#5A8020" opacity=".7"/>
+        <circle cx="26" cy="22" r="1.5" fill="#6A9030" opacity=".7"/>
+        <!-- cinnamon dusting -->
+        <path d="M20 16 Q24 15 28 16 Q32 15 34 16" stroke="#8B4010" stroke-width="1" stroke-linecap="round" opacity=".4"/>
+      </svg>`,
+
+      'بقلاوة مشكلة': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="46" rx="18" ry="4" fill="#C88020" opacity=".2"/>
+        <!-- baklava piece diamond shape -->
+        <path d="M26 12 L42 26 L26 40 L10 26Z" fill="#E8B030"/>
+        <path d="M26 14 L40 26 L26 38 L12 26Z" fill="#F0C040"/>
+        <!-- layers -->
+        <line x1="14" y1="22" x2="38" y2="22" stroke="#D4A010" stroke-width="1" opacity=".5"/>
+        <line x1="14" y1="30" x2="38" y2="30" stroke="#D4A010" stroke-width="1" opacity=".5"/>
+        <!-- walnut center -->
+        <circle cx="26" cy="26" r="5" fill="#8B6320"/>
+        <path d="M24 24 Q26 22 28 24 Q28 28 26 28 Q24 28 24 24Z" fill="#C09040"/>
+        <!-- honey glaze -->
+        <path class="anim-drip" d="M16 26 Q12 28 10 32" stroke="#E8A020" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+        <path class="anim-drip" d="M36 26 Q40 28 42 32" stroke="#E8A020" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+      </svg>`,
+
+      'قطايف بالجبن': `<svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="44" rx="16" ry="4" fill="#C88020" opacity=".2"/>
+        <!-- qatayef shape (folded pancake) -->
+        <path d="M10 32 Q10 16 26 16 Q42 16 42 32 Q36 44 26 44 Q16 44 10 32Z" fill="#E8B840"/>
+        <path d="M12 32 Q12 18 26 18 Q40 18 40 32 Q35 43 26 43 Q17 43 12 32Z" fill="#F0C850"/>
+        <!-- cheese filling visible at seam -->
+        <line x1="26" y1="18" x2="26" y2="44" stroke="#FFFFF0" stroke-width="2" opacity=".6"/>
+        <!-- syrup drip -->
+        <path class="anim-drip" d="M18 42 Q17 46 16 48" stroke="#E8A020" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <path class="anim-drip" d="M34 42 Q35 46 36 48" stroke="#E8A020" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <!-- sesame on top -->
+        <circle cx="22" cy="22" r="1" fill="#E8D070"/>
+        <circle cx="26" cy="20" r="1" fill="#E8D070"/>
+        <circle cx="30" cy="22" r="1" fill="#E8D070"/>
+        <!-- steam -->
+        <path class="anim-steam" d="M22 14 Q20 10 22 8" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path class="anim-steam2" d="M30 14 Q28 10 30 8" stroke="#ccc" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>`,
+    };
+
+    // Default SVG by category
+    const CAT_DEFAULT_SVGS = {
+      meat: FOOD_SVGS['كباب حلة'],
+      poultry: FOOD_SVGS['فراخ مشوية كاملة'],
+      seafood: FOOD_SVGS['سمك مشوي'],
+      classic: FOOD_SVGS['فول مدمس بالزيت الحار'],
+      sandwiches: FOOD_SVGS['سندوتش هامبرجر'],
+      sides: FOOD_SVGS['سلطة خضراء'],
+      drinks: FOOD_SVGS['عصير برتقال'],
+      desserts: FOOD_SVGS['كنافة نابلسي'],
+    };
+
+    function getItemSVG(itemName, catId) {
+      return FOOD_SVGS[itemName] || CAT_DEFAULT_SVGS[catId] || '';
+    }
+
     const STATE = { cart: [], favs: new Set(), query: '', cat: 'all' };
     const $ = s => document.querySelector(s);
     const $$ = s => document.querySelectorAll(s);
@@ -884,7 +1903,7 @@
                     <div class="section-line"></div>
                 </div>
                 <div class="items-grid">
-                    ${cat.items.map(item => renderItem(item)).join('')}
+                    ${cat.items.map(item => renderItem(item, cat.id)).join('')}
                 </div>
             </section>
         `).join(`<div class="ornament-divider">✦ ✦ ✦</div>`);
@@ -898,13 +1917,15 @@
         });
     }
 
-    function renderItem(item) {
+    function renderItem(item, catId) {
         const fav = STATE.favs.has(item.name);
+        const svgIcon = getItemSVG(item.name, catId);
         return `<div class="menu-item">
             <button class="item-fav ${fav ? 'on' : ''}" data-name="${esc(item.name)}"
                 onclick="toggleFav('${esc(item.name)}', this)" aria-label="إضافة للمفضلة">
                 <i class="${fav ? 'fas' : 'far'} fa-heart"></i>
             </button>
+            ${svgIcon ? `<div class="item-svg-icon">${svgIcon}</div>` : ''}
             <div class="item-body">
                 <div class="item-name">${item.name}</div>
                 ${item.desc ? `<div class="item-desc">${item.desc}</div>` : ''}
