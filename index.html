@@ -718,6 +718,20 @@
     .dish-stars { color:var(--gold); font-size:.7rem; letter-spacing:2px; }
 
     /* ═══════════ REVIEWS (horizontal infinite scroll) ═══════════ */
+    /* Force EVERYTHING inside reviews to always be visible — never hidden */
+    .reviews .reveal,
+    .reviews-header,
+    .reviews-aggregate,
+    .reviews-track-wrap,
+    .review-card,
+    .agg-score, .agg-detail, .agg-bars, .agg-stars, .agg-count,
+    .agg-bar-row, .agg-bar-track, .agg-bar-fill, .agg-bar-pct,
+    .reviewer-avatar, .reviewer-info, .reviewer-name, .reviewer-loc,
+    .review-stars, .review-text, .review-dish, .review-date, .review-header {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
     .reviews {
       padding: var(--sp-20) 0;
       background: var(--dark);
@@ -1890,8 +1904,12 @@ mobileClose.addEventListener('click', closeMobile);
 mobileMenu.addEventListener('click', e => { if(e.target === mobileMenu) closeMobile(); });
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeMobile(); });
 
-// ── Scroll reveal
-const revealEls = document.querySelectorAll('.reveal');
+// ── Scroll reveal (excluding reviews section entirely)
+const reviewsSection = document.getElementById('reviews');
+const revealEls = Array.from(document.querySelectorAll('.reveal')).filter(el => {
+  // Never apply reveal hide/show to anything inside the reviews section
+  return !reviewsSection || !reviewsSection.contains(el);
+});
 const io = new IntersectionObserver(entries => {
   entries.forEach(en => {
     if (en.isIntersecting) {
@@ -1904,6 +1922,26 @@ revealEls.forEach((el, i) => {
   el.style.transitionDelay = (i % 4 * 0.08) + 's';
   io.observe(el);
 });
+
+// Force reviews section always fully visible — no exceptions
+(function forceReviewsVisible() {
+  const reviews = document.getElementById('reviews');
+  if (!reviews) return;
+  // Mark all .reveal inside reviews as visible immediately
+  reviews.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('visible');
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+    el.style.transitionDelay = '0s';
+  });
+  // Force aggregate, header, track visible
+  ['.reviews-header','.reviews-aggregate','.reviews-track-wrap','.reviews-track'].forEach(sel => {
+    const el = reviews.querySelector(sel);
+    if (el) {
+      el.style.cssText += ';opacity:1!important;transform:none!important;visibility:visible!important;';
+    }
+  });
+})();
 
 // ── FAQ accordion
 document.querySelectorAll('.faq-q').forEach(q => {
@@ -1922,67 +1960,23 @@ document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') { e.preventDefault(); q.click(); } });
 });
 
-// ── Ensure reviews section is always visible
+// ── Reviews prev/next buttons (standalone)
 (function() {
-  // Force reviews aggregate and track to be visible immediately
-  const reviewsAggregate = document.querySelector('.reviews-aggregate');
-  const reviewsTrack = document.querySelector('.reviews-track');
-  const reviewsTrackWrap = document.querySelector('.reviews-track-wrap');
-  
-  if (reviewsAggregate) {
-    reviewsAggregate.style.opacity = '1';
-    reviewsAggregate.style.transform = 'none';
-    reviewsAggregate.classList.add('visible');
-  }
-  if (reviewsTrackWrap) {
-    reviewsTrackWrap.style.opacity = '1';
-    reviewsTrackWrap.style.visibility = 'visible';
-  }
-  if (reviewsTrack) {
-    reviewsTrack.style.opacity = '1';
-    reviewsTrack.style.visibility = 'visible';
-    
-    // If animation is broken or track is empty-looking, fallback to grid
-    setTimeout(function() {
-      const cards = reviewsTrack.querySelectorAll('.review-card:not([aria-hidden="true"])');
-      if (cards.length === 0) {
-        reviewsTrack.style.animation = 'none';
-        reviewsTrack.style.display = 'grid';
-        reviewsTrack.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
-        reviewsTrack.style.width = '100%';
-      }
-    }, 100);
-  }
-
-  // Also ensure reviews header is visible
-  const reviewsHeader = document.querySelector('.reviews-header');
-  if (reviewsHeader) {
-    reviewsHeader.style.opacity = '1';
-    reviewsHeader.style.transform = 'none';
-    reviewsHeader.classList.add('visible');
-  }
-
-  // ── Reviews prev/next buttons
   const track = document.getElementById('reviewsTrack');
   const prevBtn = document.getElementById('reviewsPrev');
   const nextBtn = document.getElementById('reviewsNext');
-  const CARD_STEP = 320; // card width + gap
-
-  // Track manual offset separate from animation
+  const CARD_STEP = 320;
   let manualOffset = 0;
-  const totalWidth = track ? track.scrollWidth / 2 : 0;
 
   function nudgeTrack(dir) {
     if (!track) return;
-    // Pause animation temporarily
+    const totalWidth = track.scrollWidth / 2;
     track.style.animationPlayState = 'paused';
     manualOffset += dir * CARD_STEP;
-    // Clamp to loop range
     if (manualOffset > 0) manualOffset = -totalWidth + CARD_STEP;
     if (manualOffset < -totalWidth) manualOffset = 0;
     track.style.transform = `translateX(${manualOffset}px)`;
     track.style.transition = 'transform 0.5s cubic-bezier(.16,1,.3,1)';
-    // Resume animation after 2s of inactivity
     clearTimeout(track._resumeTimer);
     track._resumeTimer = setTimeout(() => {
       track.style.transition = '';
