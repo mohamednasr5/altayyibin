@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- الصفحة الرئيسية -->
+  <url>
+    <loc>https://altayyibin.com/</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://altayyibin.com/"/>
+    <image:image>
+      <image:loc>https://altayyibin.com/altayyibin.jpeg</image:loc>
+      <image:title>مطعم الطيبين — أكلات شعبية مصرية أصيلة في مكة</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://altayyibin.com/altayyibinlogo.png</image:loc>
+      <image:title>شعار مطعم الطيبين</image:title>
+    </image:image>
+  </url>
+
+  <!-- قائمة الطعام -->
+  <url>
+    <loc>https://altayyibin.com/menu.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://altayyibin.com/menu.html"/>
+  </url>
+
+  <!-- سياسة الخصوصية -->
+  <url>
+    <loc>https://altayyibin.com/privacy.html</loc>
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://altayyibin.com/privacy.html"/>
+  </url>
+
+</urlset>

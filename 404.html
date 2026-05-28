@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — الصفحة غير موجودة | مطعم الطيبين</title>
+  <meta name="description" content="الصفحة التي طلبتها غير موجودة. سيتم تحويلك إلى مطعم الطيبين تلقائياً.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://altayyibin.com/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c9962b">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════ TOKENS ══════════ */
+    :root {
+      --gold:      #c9962b;
+      --gold-light:#e8b84b;
+      --ember:     #ff6a00;
+      --flame-hot: #ff2200;
+      --flame-mid: #ff8c00;
+      --flame-tip: #ffdd00;
+      --smoke-col: rgba(160,140,120,0.45);
+      --dark:      #0d0704;
+      --dark-2:    #1a0f00;
+      --cream:     #faf6ef;
+      --text-dim:  #c9b89a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ══════════ BACKGROUND EMBERS ══════════ */
+    .bg-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 80%, #2a1200 0%, #0d0704 60%);
+    }
+
+    .ember {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--ember);
+      animation: emberFloat linear infinite;
+      filter: blur(0.5px);
+    }
+
+    @keyframes emberFloat {
+      0%   { transform: translateY(0) translateX(0) scale(1);   opacity: 1; }
+      50%  { transform: translateY(-40vh) translateX(var(--drift)) scale(0.7); opacity: 0.8; }
+      100% { transform: translateY(-90vh) translateX(calc(var(--drift) * 1.6)) scale(0.2); opacity: 0; }
+    }
+
+    /* ══════════ MAIN SCENE ══════════ */
+    .scene {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ══════════ PLATE ══════════ */
+    .plate-wrap {
+      position: relative;
+      width: 260px;
+      height: 220px;
+      margin-bottom: -10px;
+    }
+
+    /* Smoke particles */
+    .smoke-container {
+      position: absolute;
+      bottom: 140px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 150px;
+      pointer-events: none;
+    }
+
+    .smoke-puff {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(180,160,140,0.5) 0%, transparent 70%);
+      animation: smokePuff linear infinite;
+    }
+
+    @keyframes smokePuff {
+      0%   { transform: translateX(-50%) scale(0.3) translateY(0);   opacity: 0.7; }
+      40%  { opacity: 0.5; }
+      100% { transform: translateX(calc(-50% + var(--drift-s))) scale(2.5) translateY(-130px); opacity: 0; }
+    }
+
+    /* SVG scene canvas */
+    .scene-svg {
+      width: 260px;
+      height: 220px;
+      filter: drop-shadow(0 8px 40px rgba(255,100,0,0.5));
+    }
+
+    /* Flames */
+    .flame-group { transform-origin: center bottom; }
+
+    .flame {
+      animation: flicker ease-in-out infinite alternate;
+      transform-origin: center bottom;
+    }
+    .flame-a { animation-duration: 0.4s; animation-delay: 0s; }
+    .flame-b { animation-duration: 0.5s; animation-delay: 0.1s; }
+    .flame-c { animation-duration: 0.35s; animation-delay: 0.2s; }
+    .flame-d { animation-duration: 0.45s; animation-delay: 0.05s; }
+    .flame-e { animation-duration: 0.6s; animation-delay: 0.15s; }
+
+    @keyframes flicker {
+      0%   { transform: scaleX(1)   scaleY(1)   skewX(0deg); }
+      25%  { transform: scaleX(1.1) scaleY(0.9) skewX(3deg); }
+      50%  { transform: scaleX(0.9) scaleY(1.1) skewX(-2deg); }
+      75%  { transform: scaleX(1.05) scaleY(0.95) skewX(1deg); }
+      100% { transform: scaleX(0.95) scaleY(1.05) skewX(-3deg); }
+    }
+
+    .glow-pulse {
+      animation: glowPulse 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes glowPulse {
+      from { opacity: 0.6; }
+      to   { opacity: 1; }
+    }
+
+    /* Plate wobble */
+    .plate-g {
+      animation: plateWobble 3s ease-in-out infinite;
+      transform-origin: center center;
+    }
+    @keyframes plateWobble {
+      0%, 100% { transform: rotate(-1deg); }
+      50%      { transform: rotate(1deg); }
+    }
+
+    /* ══════════ 404 TEXT ══════════ */
+    .error-box {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 500px;
+    }
+
+    .num-404 {
+      font-family: 'Cairo', sans-serif;
+      font-size: clamp(70px, 18vw, 110px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -4px;
+      background: linear-gradient(180deg, var(--flame-tip) 0%, var(--flame-mid) 40%, var(--ember) 80%, var(--flame-hot) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 18px rgba(255,100,0,0.7));
+      animation: textPulse 1.8s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    @keyframes textPulse {
+      from { filter: drop-shadow(0 0 10px rgba(255,100,0,0.5)); }
+      to   { filter: drop-shadow(0 0 28px rgba(255,180,0,0.9)); }
+    }
+
+    .error-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: clamp(16px, 5vw, 22px);
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-top: 6px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(232,184,75,0.4);
+    }
+
+    .error-sub {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(13px, 3.5vw, 16px);
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    /* ══════════ COUNTDOWN ══════════ */
+    .countdown-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .countdown-ring {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+    }
+
+    .countdown-ring svg {
+      transform: rotate(-90deg);
+      width: 54px; height: 54px;
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: rgba(201,150,43,0.2);
+      stroke-width: 4;
+    }
+
+    .ring-progress {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 138.2; /* 2πr = 2π×22 */
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear;
+      filter: drop-shadow(0 0 4px rgba(201,150,43,0.7));
+    }
+
+    .countdown-num {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cairo', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--gold-light);
+    }
+
+    .countdown-text {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* ══════════ BUTTON ══════════ */
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--dark-2);
+      border: none;
+      border-radius: 14px;
+      padding: 13px 32px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(201,150,43,0.45);
+      margin-bottom: 30px;
+    }
+
+    .btn-home:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(201,150,43,0.6);
+    }
+
+    .btn-home svg { width: 18px; height: 18px; }
+
+    /* ══════════ DIVIDER ══════════ */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 18px;
+    }
+
+    /* ══════════ CREDIT ══════════ */
+    .credit {
+      font-family: 'Tajawal', sans-serif;
+      font-size: 12.5px;
+      color: rgba(201,184,154,0.5);
+      text-align: center;
+      line-height: 1.7;
+      position: relative;
+      z-index: 3;
+      padding: 0 16px;
+    }
+
+    .credit a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+
+    .credit a:hover {
+      color: var(--gold-light);
+      text-shadow: 0 0 10px rgba(232,184,75,0.5);
+    }
+
+    /* ══════════ RESPONSIVE ══════════ */
+    @media (max-width: 400px) {
+      .plate-wrap { width: 210px; height: 180px; }
+      .scene-svg  { width: 210px; height: 180px; }
+      .smoke-container { bottom: 115px; }
+      body { justify-content: flex-start; padding-top: 30px; overflow-y: auto; }
+      html { overflow-y: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background embers -->
+  <div class="bg-canvas" id="bgCanvas"></div>
+
+  <div class="scene">
+
+    <!-- Smoke puffs -->
+    <div class="smoke-container" id="smokeContainer"></div>
+
+    <!-- SVG scene: plate + food + flames -->
+    <div class="plate-wrap">
+      <svg class="scene-svg" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Flame gradients -->
+          <radialGradient id="flameCore" cx="50%" cy="90%" r="60%">
+            <stop offset="0%"   stop-color="#fff7aa"/>
+            <stop offset="30%"  stop-color="#ffdd00"/>
+            <stop offset="65%"  stop-color="#ff8c00"/>
+            <stop offset="100%" stop-color="#ff2200" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="flameMid" cx="50%" cy="80%" r="60%">
+            <stop offset="0%"   stop-color="#ffdd00"/>
+            <stop offset="50%"  stop-color="#ff6a00"/>
+            <stop offset="100%" stop-color="#ff2200" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="flameTip" cx="50%" cy="70%" r="60%">
+            <stop offset="0%"  stop-color="#ff8c00"/>
+            <stop offset="100%" stop-color="#cc2200" stop-opacity="0"/>
+          </radialGradient>
+
+          <!-- Plate gradient -->
+          <radialGradient id="plateFill" cx="50%" cy="40%" r="70%">
+            <stop offset="0%"   stop-color="#f5f0e8"/>
+            <stop offset="60%"  stop-color="#e8dfc8"/>
+            <stop offset="100%" stop-color="#c8b898"/>
+          </radialGradient>
+
+          <!-- Charred food gradient -->
+          <radialGradient id="foodBurn" cx="50%" cy="50%" r="60%">
+            <stop offset="0%"   stop-color="#3a2200"/>
+            <stop offset="50%"  stop-color="#1a0a00"/>
+            <stop offset="100%" stop-color="#0d0500"/>
+          </radialGradient>
+
+          <!-- Glow filter -->
+          <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+
+          <!-- Ember filter -->
+          <filter id="emberGlow">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Plate shadow -->
+        <ellipse cx="130" cy="200" rx="90" ry="12" fill="rgba(0,0,0,0.5)"/>
+
+        <!-- Plate group with wobble -->
+        <g class="plate-g">
+          <!-- Plate base -->
+          <ellipse cx="130" cy="185" rx="88" ry="22" fill="#b8aa90"/>
+          <ellipse cx="130" cy="180" rx="88" ry="22" fill="url(#plateFill)"/>
+          <!-- Plate rim highlight -->
+          <ellipse cx="130" cy="178" rx="84" ry="18" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+          <!-- Plate inner -->
+          <ellipse cx="130" cy="175" rx="72" ry="15" fill="#f0e8d5"/>
+
+          <!-- Burned food — Kushari pile (charred) -->
+          <!-- Main burnt mound -->
+          <ellipse cx="130" cy="168" rx="55" ry="12" fill="#1a0800"/>
+          <!-- Charred lumps -->
+          <ellipse cx="110" cy="164" rx="20" ry="9"  fill="url(#foodBurn)"/>
+          <ellipse cx="135" cy="162" rx="22" ry="10" fill="#2a1200"/>
+          <ellipse cx="155" cy="165" rx="18" ry="8"  fill="url(#foodBurn)"/>
+          <ellipse cx="122" cy="160" rx="16" ry="8"  fill="#1a0800"/>
+          <ellipse cx="142" cy="158" rx="14" ry="7"  fill="#220e00"/>
+          <!-- Ember dots on food -->
+          <circle cx="118" cy="161" r="3" fill="#ff6a00" opacity="0.8" filter="url(#emberGlow)"/>
+          <circle cx="138" cy="158" r="2" fill="#ffaa00" opacity="0.9" filter="url(#emberGlow)"/>
+          <circle cx="152" cy="163" r="2.5" fill="#ff4400" opacity="0.7" filter="url(#emberGlow)"/>
+          <circle cx="126" cy="156" r="1.5" fill="#ffcc00" opacity="0.85"/>
+          <circle cx="144" cy="162" r="2" fill="#ff6600" opacity="0.75"/>
+
+          <!-- Cracked burnt surface lines -->
+          <path d="M108 165 Q115 160 122 163" stroke="#ff4400" stroke-width="0.8" fill="none" opacity="0.6"/>
+          <path d="M135 160 Q140 155 148 159" stroke="#ff6600" stroke-width="0.8" fill="none" opacity="0.5"/>
+          <path d="M120 158 Q128 154 136 157" stroke="#ffaa00" stroke-width="0.6" fill="none" opacity="0.4"/>
+        </g>
+
+        <!-- FLAMES — above food -->
+        <g class="flame-group" filter="url(#glow)">
+
+          <!-- Flame 1 — left, big -->
+          <g class="flame flame-a" style="transform-origin:105px 165px">
+            <path d="M105,165 C98,150 90,140 96,125 C99,115 108,118 105,130 C108,120 115,108 118,120 C120,110 128,98 125,115 C123,108 130,100 128,118 C132,105 138,108 133,125 C130,118 125,125 125,135 C130,120 138,122 132,140 C128,148 115,158 105,165 Z"
+                  fill="url(#flameCore)" opacity="0.95"/>
+          </g>
+
+          <!-- Flame 2 — center, tallest -->
+          <g class="flame flame-b" style="transform-origin:130px 158px">
+            <path d="M130,158 C123,140 115,125 120,105 C123,92 132,96 130,110 C133,98 140,85 143,100 C145,88 154,78 150,96 C148,85 156,82 153,102 C150,92 148,100 147,115 C152,98 162,102 156,118 C152,128 142,145 130,158 Z"
+                  fill="url(#flameCore)" opacity="1"/>
+          </g>
+
+          <!-- Flame 2b — center overlay for depth -->
+          <g class="flame flame-e" style="transform-origin:130px 158px">
+            <path d="M130,158 C126,145 122,132 126,115 C128,105 134,108 132,118 C134,108 139,98 141,110 C143,100 148,93 146,108 C144,100 148,98 147,112 C150,102 155,105 152,118 C148,128 138,145 130,158 Z"
+                  fill="url(#flameMid)" opacity="0.8"/>
+          </g>
+
+          <!-- Flame 3 — right -->
+          <g class="flame flame-c" style="transform-origin:155px 163px">
+            <path d="M155,163 C148,148 142,135 146,118 C149,108 157,112 154,124 C157,114 164,103 167,116 C169,105 176,100 172,114 C170,106 176,104 174,120 C175,110 180,112 177,126 C174,136 164,152 155,163 Z"
+                  fill="url(#flameCore)" opacity="0.9"/>
+          </g>
+
+          <!-- Flame 4 — small left -->
+          <g class="flame flame-d" style="transform-origin:95px 168px">
+            <path d="M95,168 C90,158 85,148 88,136 C90,128 96,130 94,140 C97,132 102,124 104,134 C105,126 110,120 108,132 C110,124 115,122 113,136 C110,144 103,160 95,168 Z"
+                  fill="url(#flameMid)" opacity="0.85"/>
+          </g>
+
+          <!-- Flame 5 — small right -->
+          <g class="flame flame-a" style="transform-origin:165px 166px">
+            <path d="M165,166 C160,156 156,146 159,134 C161,126 167,128 165,138 C168,130 173,122 175,132 C176,124 181,118 179,130 C177,122 182,120 180,134 C178,142 172,158 165,166 Z"
+                  fill="url(#flameMid)" opacity="0.8"/>
+          </g>
+
+          <!-- Hot glow base -->
+          <ellipse cx="130" cy="162" rx="50" ry="8" fill="#ff4400" opacity="0.25" class="glow-pulse"/>
+          <ellipse cx="130" cy="160" rx="35" ry="5" fill="#ffaa00" opacity="0.3" class="glow-pulse"/>
+
+        </g><!-- /flame-group -->
+
+      </svg>
+    </div><!-- /plate-wrap -->
+
+    <!-- Error text box -->
+    <div class="error-box">
+      <div class="num-404">404</div>
+      <p class="error-title">🔥 احترق الطلب قبل ما يوصل!</p>
+      <p class="error-sub">الصفحة التي طلبتها غير موجودة<br>ربما تبخّرت مع الدخان…</p>
+
+      <!-- Countdown ring -->
+      <div class="countdown-wrap">
+        <div class="countdown-ring">
+          <svg viewBox="0 0 54 54">
+            <circle class="ring-bg" cx="27" cy="27" r="22"/>
+            <circle class="ring-progress" id="ringProgress" cx="27" cy="27" r="22"/>
+          </svg>
+          <div class="countdown-num" id="countdownNum">10</div>
+        </div>
+        <div class="countdown-text">سيتم تحويلك إلى<br><strong style="color:var(--gold)">مطعم الطيبين</strong> تلقائياً</div>
+      </div>
+
+      <a href="https://altayyibin.com/" class="btn-home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9,22 9,12 15,12 15,22"/>
+        </svg>
+        العودة للصفحة الرئيسية
+      </a>
+
+      <div class="divider"></div>
+    </div>
+
+  </div><!-- /scene -->
+
+  <!-- Credit -->
+  <div class="credit">
+    برمجة وتطوير
+    <a href="https://www.facebook.com/en.mohamed.nasr" target="_blank" rel="noopener noreferrer">
+      المهندس محمد حماد
+    </a>
+  </div>
+
+<script>
+  /* ══ Background embers ══ */
+  (function() {
+    const canvas = document.getElementById('bgCanvas');
+    const count = 35;
+    for (let i = 0; i < count; i++) {
+      const e = document.createElement('div');
+      e.className = 'ember';
+      const size = 2 + Math.random() * 4;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 6;
+      const dur   = 4 + Math.random() * 5;
+      const drift = (Math.random() - 0.5) * 80;
+      const colors = ['#ff6a00','#ff9500','#ffcc00','#ff3300','#ffaa00'];
+      const col = colors[Math.floor(Math.random() * colors.length)];
+      e.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${left}%;
+        bottom: -10px;
+        background:${col};
+        animation-duration:${dur}s;
+        animation-delay:${delay}s;
+        --drift:${drift}px;
+        opacity:0;
+      `;
+      canvas.appendChild(e);
+    }
+  })();
+
+  /* ══ Smoke puffs ══ */
+  (function() {
+    const container = document.getElementById('smokeContainer');
+    const count = 8;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('div');
+      s.className = 'smoke-puff';
+      const size = 30 + Math.random() * 50;
+      const delay = Math.random() * 4;
+      const dur   = 3 + Math.random() * 3;
+      const drift = (Math.random() - 0.5) * 60;
+      const left  = 30 + Math.random() * 40;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${left}%;
+        animation-duration:${dur}s;
+        animation-delay:${delay}s;
+        --drift-s:${drift}px;
+      `;
+      container.appendChild(s);
+    }
+  })();
+
+  /* ══ Countdown & redirect ══ */
+  (function() {
+    const TOTAL = 10;
+    const circumference = 2 * Math.PI * 22; // 138.23
+    const ring = document.getElementById('ringProgress');
+    const numEl = document.getElementById('countdownNum');
+    let remaining = TOTAL;
+
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = '0';
+
+    function tick() {
+      remaining--;
+      numEl.textContent = remaining;
+      const progress = (TOTAL - remaining) / TOTAL;
+      ring.style.strokeDashoffset = (circumference * progress).toFixed(2);
+
+      if (remaining <= 3) {
+        ring.style.stroke = '#ff6a00';
+      }
+
+      if (remaining <= 0) {
+        window.location.href = 'https://altayyibin.com/';
+      }
+    }
+
+    setInterval(tick, 1000);
+  })();
+</script>
+
+</body>
+</html>

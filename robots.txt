@@ -1,0 +1,47 @@
+# ══════════════════════════════════════════════
+#  robots.txt — مطعم الطيبين
+#  https://altayyibin.com/
+# ══════════════════════════════════════════════
+
+User-agent: *
+Allow: /
+
+# منع الزحف على الملفات الداخلية والأيقونات
+Disallow: /icons/
+Disallow: /browserconfig.xml
+
+# منع الصفحة المبهمة
+Disallow: /404.html
+
+Sitemap: https://altayyibin.com/sitemap.xml
+
+# ══ Googlebot ══
+User-agent: Googlebot
+Allow: /
+Allow: /menu.html
+Allow: /privacy.html
+Crawl-delay: 1
+
+# ══ Googlebot-Image ══
+User-agent: Googlebot-Image
+Allow: /altayyibin.jpeg
+Allow: /altayyibinlogo.png
+Allow: /favicon.svg
+
+# ══ Bingbot ══
+User-agent: bingbot
+Allow: /
+Crawl-delay: 2
+
+# ══ منع بوتات ضارة ══
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
