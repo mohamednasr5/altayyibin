@@ -59,7 +59,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <!-- Font Awesome — Non-blocking load -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  </noscript>
 
   <!-- ════════════════════════════════════════════════
        STRUCTURED DATA — JSON-LD (Google + AI Search)
@@ -242,8 +247,8 @@
       --cream-2:     #f3e8ce;
       --parchment:   #e8d5a8;
       --text:        #faf3e4;
-      --text-muted:  rgba(250,243,228,0.65);
-      --text-faint:  rgba(250,243,228,0.38);
+      --text-muted:  rgba(250,243,228,0.80);
+      --text-faint:  rgba(250,243,228,0.55);
       --divider:     rgba(201,150,43,0.18);
       --border:      rgba(201,150,43,0.25);
       --shadow:      0 8px 40px rgba(0,0,0,0.55);
@@ -437,6 +442,16 @@
       animation: fadeUp .8s .1s ease both;
     }
     .hero-title span { color:var(--gold-l); display:block; }
+    /* hero-title h1 reset */
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--cream);
+      animation: fadeUp .8s .1s ease both;
+      margin: 0;
+    }
     .hero-sub {
       font-size:clamp(1rem,2.2vw,1.25rem);
       color:var(--text-muted); line-height:1.9; max-width:52ch;
@@ -776,14 +791,15 @@
       opacity:1 !important; transform:none !important;
     }
     .reviews-track {
-      display:flex; gap:var(--sp-5);
-      width:max-content;
-      animation: scrollReviewsRTL 55s linear infinite;
-      /* Always visible */
-      opacity:1 !important; transform:translateX(0);
-      visibility:visible !important;
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      opacity: 1 !important;
+      visibility: visible !important;
     }
-    .reviews-track:hover { animation-play-state:paused; }
+    .reviews-track:hover {
+      animation-play-state: paused !important;
+    }
     /* Fallback grid when animation is not supported or disabled */
     @media (prefers-reduced-motion: reduce) {
       .reviews-track {
@@ -794,10 +810,7 @@
       }
       .reviews-track .review-card[aria-hidden="true"] { display:none; }
     }
-    @keyframes scrollReviewsRTL {
-      from { transform:translateX(-50%); }
-      to   { transform:translateX(0); }
-    }
+    /* scrollReviewsRTL removed — handled by JS */
     /* ═══════════ REVIEWS NAV BUTTONS ═══════════ */
     .reviews-nav {
       display:flex; align-items:center; justify-content:center;
@@ -973,9 +986,13 @@
     .footer-col ul { display:flex; flex-direction:column; gap:var(--sp-3); }
     .footer-col ul li a {
       font-size:.82rem; color:var(--text-muted);
-      transition:color .2s;
+      transition:color .2s, text-decoration-color .2s;
+      text-decoration-line: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 3px;
     }
-    .footer-col ul li a:hover { color:var(--gold-l); }
+    .footer-col ul li a:hover { color:var(--gold-l);   text-decoration-color: var(--gold-l);
+    }
     .footer-bottom {
       border-top:1px solid var(--divider);
       padding-top:var(--sp-6);
@@ -1141,6 +1158,23 @@
     .pwa-banner__sub { font-size: 11.5px; }
     .pwa-banner__btn-install { padding: 8px 14px; font-size: 13px; }
   }
+
+    /* ── will-change: performance for animated elements ── */
+    .hero-title, .hero-sub, .hero-badge { will-change: opacity, transform; }
+    .dish-icon-wrap img, .about-img img  { will-change: transform; }
+    .dish-card:hover                     { will-change: transform; }
+    .btn-primary, .btn-outline           { will-change: transform; }
+
+    /* ── Map iframe CLS fix ── */
+    .map-wrap iframe {
+      width: 100%;
+      height: 420px;
+      aspect-ratio: 16/9;
+      border: 0;
+    }
+    @media (max-width: 900px) {
+      .map-wrap iframe { height: 300px; }
+    }
   </style>
 </head>
 
@@ -1171,7 +1205,10 @@
 <header class="site-header" id="siteHeader">
   <nav class="nav-inner">
     <a href="/" class="nav-brand" aria-label="مطعم الطيبين - الصفحة الرئيسية">
-      <img src="altayyibinlogo.png" alt="شعار مطعم الطيبين" width="54" height="42">
+      <picture>
+              <source srcset="altayyibinlogo.webp" type="image/webp">
+              <img src="altayyibinlogo.png" alt="شعار مطعم الطيبين" width="54" height="54" decoding="async">
+            </picture>
       <span>
         مطعم الطيبين
         <small>أكلات شعبية مصرية أصيلة</small>
@@ -1214,7 +1251,7 @@
       <i class="fas fa-award"></i>
       <span>الأول في الأكلات الشعبية المصرية · مكة </span>
     </div>
-    <h1 class="hero-title">
+    <h1 class="hero-title speakable-hero">
       طعم مصر الأصيل
       <span>على أرض الحرمين</span>
     </h1>
@@ -1269,13 +1306,14 @@
       <div class="about-image-wrap reveal">
         <div class="about-floater" aria-hidden="true">🌟 الأفضل في مكة </div>
         <div class="about-image-frame">
-          <img
-            src="https://altayyibin.com/altayyibin.jpeg"
+          <picture>
+            <source srcset="altayyibin.webp" type="image/webp">
+            <img src="altayyibin.jpeg"
             alt="صورة داخلية لمطعم الطيبين — أجواء مصرية أصيلة بالذهبي والأحمر"
             width="600" height="480"
             loading="lazy"
-            onerror="this.style.background='linear-gradient(135deg,#3d1a08,#1a0f00)';this.style.height='480px';this.src=''"
-          >
+            decoding="async">
+          </picture>
           <div class="about-image-badge">
             <div>
               <div class="stars">★★★★★</div>
@@ -1916,6 +1954,8 @@
         <iframe
           title="موقع مطعم الطيبين على خرائط جوجل"
           src="https://maps.google.com/maps?q=21.4402962,39.8184967&z=15&output=embed&hl=ar"
+          width="100%"
+          height="420"
           allowfullscreen
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -1935,7 +1975,10 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="nav-brand" style="display:inline-flex;margin-bottom:0" aria-label="مطعم الطيبين">
-          <img src="altayyibinlogo.png" alt="شعار مطعم الطيبين" width="54" height="42">
+          <picture>
+              <source srcset="altayyibinlogo.webp" type="image/webp">
+              <img src="altayyibinlogo.png" alt="شعار مطعم الطيبين" width="54" height="54" decoding="async">
+            </picture>
           <span style="margin-right:12px">
             مطعم الطيبين
             <small>الأكلات الشعبية المصرية الأصيلة</small>
@@ -2079,33 +2122,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') { e.preventDefault(); q.click(); } });
 });
 
-// ── Reviews prev/next buttons (standalone)
-(function() {
-  const track = document.getElementById('reviewsTrack');
-  const prevBtn = document.getElementById('reviewsPrev');
-  const nextBtn = document.getElementById('reviewsNext');
-  const CARD_STEP = 320;
-  let manualOffset = 0;
 
-  function nudgeTrack(dir) {
-    if (!track) return;
-    const totalWidth = track.scrollWidth / 2;
-    track.style.animationPlayState = 'paused';
-    manualOffset += dir * CARD_STEP;
-    if (manualOffset > 0) manualOffset = -totalWidth + CARD_STEP;
-    if (manualOffset < -totalWidth) manualOffset = 0;
-    track.style.transform = `translateX(${manualOffset}px)`;
-    track.style.transition = 'transform 0.5s cubic-bezier(.16,1,.3,1)';
-    clearTimeout(track._resumeTimer);
-    track._resumeTimer = setTimeout(() => {
-      track.style.transition = '';
-      track.style.animationPlayState = 'running';
-    }, 2000);
-  }
-
-  if (prevBtn) prevBtn.addEventListener('click', () => nudgeTrack(-1));
-  if (nextBtn) nextBtn.addEventListener('click', () => nudgeTrack(1));
-})();
 
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -2191,6 +2208,86 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   if (isIos && !isStandalone && !wasDismissed()) {
     showBanner();
   }
+})();
+</script>
+
+
+<script>
+/* ── Reviews Infinite Auto-Scroll + Arrows + Swipe ── */
+(function () {
+  const track = document.getElementById('reviewsTrack');
+  if (!track) return;
+
+  /* 1. نسخ الكروت لعمل infinite loop سلس */
+  const cards = Array.from(track.children);
+  cards.forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  /* 2. حساب عرض النسخة الأصلية بعد render */
+  requestAnimationFrame(() => {
+    let totalW = 0;
+    cards.forEach(c => { totalW += c.offsetWidth + 20; });
+
+    /* 3. CSS Animation ديناميكي بناءً على العرض الحقيقي */
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes scrollAuto {
+        0%   { transform: translateX(-${totalW}px); }
+        100% { transform: translateX(0); }
+      }
+      #reviewsTrack {
+        animation: scrollAuto 40s linear infinite !important;
+      }
+      #reviewsTrack:hover {
+        animation-play-state: paused !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    /* 4. أزرار السهم */
+    const prevBtn = document.getElementById('reviewsPrev');
+    const nextBtn = document.getElementById('reviewsNext');
+    const STEP = 320;
+    let offset = 0;
+    let resumeTimer = null;
+
+    function moveTrack(dir) {
+      const matrix = new DOMMatrix(getComputedStyle(track).transform);
+      offset = matrix.m41;
+
+      track.style.animation = 'none';
+      offset += dir * STEP;
+      if (offset > 0) offset = -(totalW - STEP);
+      if (offset < -totalW) offset = 0;
+
+      track.style.transition = 'transform 0.45s cubic-bezier(.16,1,.3,1)';
+      track.style.transform = `translateX(${offset}px)`;
+
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        track.style.transition = '';
+        track.style.transform = '';
+        track.style.animation = 'scrollAuto 40s linear infinite';
+        offset = 0;
+      }, 3000);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => moveTrack(1));
+    if (nextBtn) nextBtn.addEventListener('click', () => moveTrack(-1));
+
+    /* 5. Swipe على الموبايل */
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) moveTrack(diff > 0 ? -1 : 1);
+    }, { passive: true });
+  });
 })();
 </script>
 
