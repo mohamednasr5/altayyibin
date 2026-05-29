@@ -3,56 +3,44 @@
 #  https://altayyibin.com/
 # ══════════════════════════════════════════════
 
-Options -Indexes
-ServerSignature Off
-
-# ══ HTTPS Redirect ══
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
-
-# ══ www → non-www ══
-RewriteCond %{HTTP_HOST} ^www\.altayyibin\.com [NC]
-RewriteRule ^(.*)$ https://altayyibin.com/$1 [R=301,L]
-
-# ══ Custom Error Pages ══
-ErrorDocument 404 /404.html
-ErrorDocument 403 /404.html
-ErrorDocument 500 /404.html
-
-# ══ Trailing slash normalize ══
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} (.+)/$
-RewriteRule ^ %1 [R=301,L]
-
-# ══ MIME Types ══
-AddType application/manifest+json  .json
-AddType image/svg+xml              .svg
-AddType application/javascript     .js
-
-# ══ Compression (Gzip) ══
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+# ══ WebP Auto-Serve ══
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_ACCEPT} image/webp
+  RewriteCond %{REQUEST_FILENAME} \.(jpe?g|png)$
+  RewriteCond %{REQUEST_FILENAME}.webp -f
+  RewriteRule ^ %{REQUEST_URI}.webp [L,T=image/webp]
 </IfModule>
 
-# ══ Browser Caching ══
+<IfModule mod_headers.c>
+  Header append Vary Accept env=REDIRECT_accept
+</IfModule>
+
+# ══ Cache Control ══
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType text/html                  "access plus 1 hour"
-  ExpiresByType text/css                   "access plus 1 month"
-  ExpiresByType application/javascript     "access plus 1 month"
-  ExpiresByType image/jpeg                 "access plus 6 months"
-  ExpiresByType image/png                  "access plus 6 months"
-  ExpiresByType image/svg+xml              "access plus 6 months"
+  ExpiresByType text/css                   "access plus 1 year"
+  ExpiresByType application/javascript     "access plus 1 year"
+  ExpiresByType image/jpeg                 "access plus 1 year"
+  ExpiresByType image/png                  "access plus 1 year"
+  ExpiresByType image/webp                 "access plus 1 year"
+  ExpiresByType image/svg+xml              "access plus 1 year"
   ExpiresByType image/x-icon               "access plus 1 year"
   ExpiresByType application/manifest+json  "access plus 1 week"
+  ExpiresByType font/woff2                 "access plus 1 year"
 </IfModule>
 
-# ══ Security Headers ══
 <IfModule mod_headers.c>
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set X-XSS-Protection "1; mode=block"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  <FilesMatch "\.(css|js|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(jpg|jpeg|png|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+  # ══ Security Headers ══
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
