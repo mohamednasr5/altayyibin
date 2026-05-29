@@ -7,7 +7,7 @@
   <!-- ════════════════════════════════════════════════
        PRIMARY SEO — مطعم الطيبين
   ════════════════════════════════════════════════ -->
-  <title>مطعم الطيبين | أصل الأكلات الشعبية المصرية في مكة  — كشري، فول، طعمية، كبدة</title>
+  <title>مطعم الطيبين | أصيل الأكلات الشعبية المصرية في مكة  — كشري، فول، طعمية، كبدة</title>
   <meta name="description"
         content="مطعم الطيبين — وجهتك الأولى للأكلات الشعبية المصرية الأصيلة في مكة . استمتع بأشهى الكشري، الفول المدمس، الطعمية، الكبدة الإسكندرانية والحواوشي. طعم مصر الأصيل على أرض المملكة.">
   <meta name="keywords"
@@ -28,7 +28,7 @@
   <meta property="og:url"               content="https://altayyibin.com/">
   <meta property="og:title"             content="مطعم الطيبين — الأكلات الشعبية المصرية الأصيلة">
   <meta property="og:description"       content="طعم مصر الأصيل في قلب مكة . كشري، فول، طعمية، حواوشي وكبدة إسكندرانية. جودة لا تُقارن، أسعار لا تُنافس.">
-  <meta property="og:image"             content="https://altayyibin.com/altayyibin.WebP ">
+  <meta property="og:image"             content="https://altayyibin.com/altayyibin.webp">
   <meta property="og:image:alt"         content="مطعم الطيبين — أكلات شعبية مصرية">
   <meta property="og:image:width"       content="1200">
   <meta property="og:image:height"      content="630">
@@ -39,7 +39,7 @@
   <meta name="twitter:card"             content="summary_large_image">
   <meta name="twitter:title"            content="مطعم الطيبين — الأكلات الشعبية المصرية الأصيلة">
   <meta name="twitter:description"      content="طعم مصر الأصيل في قلب مكة . كشري، فول، طعمية، حواوشي وكبدة إسكندرانية.">
-  <meta name="twitter:image"            content="https://altayyibin.com/altayyibin.WebP ">
+  <meta name="twitter:image"            content="https://altayyibin.com/altayyibin.webp">
 
   <!-- ════════════ PWA ════════════ -->
   <meta name="theme-color"                       content="#c9962b">
@@ -81,8 +81,8 @@
         "alternateName": ["الطيبين", "Al-Tayyibin Restaurant", "Tayyibin Egyptian Restaurant"],
         "description": "مطعم الطيبين وجهتك الأولى للأكلات الشعبية المصرية الأصيلة في مكة . نقدم أشهى الكشري، الفول المدمس، الطعمية، الكبدة الإسكندرانية والحواوشي بأصيل الطعم المصري.",
         "url": "https://altayyibin.com/",
-        "logo": "https://altayyibin.com/altayyibinlogo.WebP ",
-        "image": "https://altayyibin.com/altayyibin.WebP ",
+        "logo": "https://altayyibin.com/altayyibinlogo.webp",
+        "image": "https://altayyibin.com/altayyibin.webp",
         "telephone": "966561422312",
         "email": "info@altayyibin.com",
         "address": {
@@ -798,9 +798,7 @@
       opacity: 1 !important;
       visibility: visible !important;
     }
-    .reviews-track:hover {
-      animation-play-state: paused !important;
-    }
+    .reviews-track:hover { animation-play-state: paused !important; }
     /* Fallback grid when animation is not supported or disabled */
     @media (prefers-reduced-motion: reduce) {
       .reviews-track {
@@ -1177,24 +1175,68 @@
       .map-wrap iframe { height: 300px; }
     }
 
-    /* ── CLS Prevention ── */
-    .pwa-banner {
-      contain: layout;
-    }
+    /* ════════════════════════════════════════
+       CLS FIX — منع تحرك العناصر أثناء التحميل
+    ════════════════════════════════════════ */
+
+    /* 1. Hero elements — contain layout */
     .hero-content,
     .hero-badge,
     .hero-title,
     .hero-sub,
     .hero-actions,
-    .hero-stats {
-      contain: layout style;
+    .hero-stats { contain: layout style; }
+
+    /* 2. PWA Banner — reserve space */
+    .pwa-banner {
+      contain: layout;
+      min-height: 72px;
     }
-    /* Reserve space for hero background image */
+
+    /* 3. Hero section — fix height مسبقاً */
     .hero {
       min-height: 100svh;
-      content-visibility: auto;
-      contain-intrinsic-size: 0 100vh;
+      min-height: 100vh; /* fallback */
     }
+
+    /* 4. Animations — استخدم فقط opacity + transform (لا layout shift) */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* 5. عناصر الـ animation — حجزها مسبقاً بـ opacity:0 */
+    .hero-badge,
+    .hero-title,
+    .hero-sub,
+    .hero-actions,
+    .hero-stats {
+      animation-fill-mode: both;
+    }
+
+    /* 6. Section cards — منع layout shift */
+    .dish-card,
+    .review-card,
+    .about-feature,
+    .faq-item {
+      contain: layout style;
+    }
+
+    /* 7. Images — تأكد من عدم التمدد */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* 8. Scrollbar reserve — منع layout shift من scrollbar */
+    html {
+      scrollbar-gutter: stable;
+    }
+
   </style>
 </head>
 
@@ -1227,7 +1269,7 @@
     <a href="/" class="nav-brand" aria-label="مطعم الطيبين - الصفحة الرئيسية">
       <picture>
               <source srcset="altayyibinlogo.webp" type="image/webp">
-              <img src="altayyibinlogo.WebP " alt="شعار مطعم الطيبين" width="54" height="54" decoding="async">
+              <img src="altayyibinlogo.webp" alt="شعار مطعم الطيبين" width="54" height="54" decoding="async">
             </picture>
       <span>
         مطعم الطيبين
@@ -1328,7 +1370,7 @@
         <div class="about-image-frame">
           <picture>
             <source srcset="altayyibin.webp" type="image/webp">
-            <img src="altayyibin.WebP "
+            <img src="altayyibin.webp"
             alt="صورة داخلية لمطعم الطيبين — أجواء مصرية أصيلة بالذهبي والأحمر"
             width="600" height="480"
             loading="lazy"
@@ -1997,7 +2039,7 @@
         <a href="/" class="nav-brand" style="display:inline-flex;margin-bottom:0" aria-label="مطعم الطيبين">
           <picture>
               <source srcset="altayyibinlogo.webp" type="image/webp">
-              <img src="altayyibinlogo.WebP " alt="شعار مطعم الطيبين" width="54" height="54" decoding="async">
+              <img src="altayyibinlogo.webp" alt="شعار مطعم الطيبين" width="54" height="54" decoding="async">
             </picture>
           <span style="margin-right:12px">
             مطعم الطيبين
@@ -2045,7 +2087,7 @@
     </div>
     <div class="footer-bottom">
 <p>©  مطعم الطيبين — جميع الحقوق محفوظة | <a href="privacy.html">سياسة الخصوصية</a></p>
-      <p>صُنع بـ <span class="heart-beat" aria-label="قلب">❤️</span> بواسطة <a href="https://www.facebook.com/en.mohamed.nasr" target="_blank" rel="nofollow noopener noreferrer" class="engineer-credit"><i class="fab fa-facebook-f"></i> المهندس محمد حماد</a></p>
+      <p>صُنع بـ <span class="heart-beat" aria-label="قلب">❤️</span> بواسطة <a href="https://www.facebook.com/en.mohamed.nasr" target="_blank" rel="noopener noreferrer" class="engineer-credit"><i class="fab fa-facebook-f"></i> المهندس محمد حماد</a></p>
     </div>
   </div>
 </footer>
@@ -2238,7 +2280,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   const track = document.getElementById('reviewsTrack');
   if (!track) return;
 
-  /* نسخ الكروت لـ infinite loop */
   const cards = Array.from(track.children);
   cards.forEach(card => {
     const clone = card.cloneNode(true);
