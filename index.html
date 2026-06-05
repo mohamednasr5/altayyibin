@@ -552,9 +552,6 @@
       font-weight:900; font-size:.8rem;
       transform:rotate(-3deg);
       box-shadow:0 4px 16px rgba(201,150,43,0.4);
-      z-index:10;
-      opacity:1 !important;
-      visibility:visible !important;
     }
 
     .about-content {}
@@ -1249,12 +1246,156 @@
     }
 
   
-    /* Force about-floater always visible regardless of reveal state */
-    .about-image-wrap .about-floater {
-      opacity: 1 !important;
-      transform: rotate(-3deg) !important;
-      visibility: visible !important;
-    }
+/* ===================== PHOTO SLIDESHOW ===================== */
+.photo-slideshow {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--dark);
+  padding: var(--sp-12) 0;
+}
+.photo-slideshow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-d), transparent);
+}
+.photo-slideshow::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-d), transparent);
+}
+.slideshow-header {
+  text-align: center;
+  margin-bottom: var(--sp-8);
+}
+.slideshow-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow), 0 0 0 1px var(--border);
+}
+.slideshow-slides {
+  display: flex;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.slide {
+  min-width: 100%;
+  position: relative;
+}
+.slide img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+.slide-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(to top, rgba(13,7,0,0.85) 0%, transparent 100%);
+}
+.slideshow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(13,7,0,0.6);
+  border: 1.5px solid var(--border);
+  color: var(--gold-l);
+  width: 46px;
+  height: 46px;
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  backdrop-filter: blur(8px);
+}
+.slideshow-btn:hover {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+  transform: translateY(-50%) scale(1.08);
+}
+.slideshow-btn.prev { right: 16px; }
+.slideshow-btn.next { left: 16px; }
+.slideshow-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--sp-5);
+}
+.slideshow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--text-faint);
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+.slideshow-dot.active {
+  background: var(--gold);
+  width: 24px;
+}
+.slideshow-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  animation: slideProgress 4s linear infinite;
+  transform-origin: left;
+}
+@keyframes slideProgress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+@media (max-width: 700px) {
+  .slide img { height: 260px; }
+  .slideshow-btn { width: 36px; height: 36px; font-size: .85rem; }
+}
+/* ===================== END SLIDESHOW ===================== */
+
+/* ===================== COUNTER ANIMATION ===================== */
+.counter {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--gold-l);
+  line-height: 1.1;
+}
+.counter.counting {
+  animation: counterPop 0.15s ease;
+}
+@keyframes counterPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.12); color: #fff; }
+  100% { transform: scale(1); }
+}
+/* ===================== END COUNTER ===================== */
+
+/* ===================== ABOUT FLOATER FIX ===================== */
+.about-image-wrap .about-floater {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: rotate(-3deg) !important;
+  z-index: 10;
+}
+/* ===================== END FLOATER FIX ===================== */
 
 </style>
 </head>
@@ -1353,15 +1494,15 @@
     </div>
     <div class="hero-stats" aria-label="إحصائيات المطعم">
       <div class="hero-stat">
-        <strong>+٨٤٠</strong>
+        <strong class="counter" data-target="840" data-prefix="+" data-arabic="true">+٠</strong>
         <span>تقييم 5 نجوم</span>
       </div>
       <div class="hero-stat">
-        <strong>4.5</strong>
+        <strong class="counter" data-target="4.5" data-decimal="1" data-prefix="">٠</strong>
         <span>متوسط التقييم</span>
       </div>
       <div class="hero-stat">
-        <strong>+100</strong>
+        <strong class="counter" data-target="100" data-prefix="+">+٠</strong>
         <span>طبق مصري أصيل</span>
       </div>
       <div class="hero-stat">
@@ -1498,7 +1639,34 @@
 <!-- ═══════════════════════════════════════════════
      SIGNATURE DISHES
 ═══════════════════════════════════════════════ -->
-<section class="dishes" id="dishes" aria-label="أطباقنا المميزة">
+
+    <!-- ===== PHOTO SLIDESHOW ===== -->
+    <section class="photo-slideshow" id="photoSlideshow" aria-label="معرض صور المطعم">
+      <div class="container">
+        <div class="slideshow-header reveal">
+          <div class="section-tag"><i class="fas fa-images"></i> <span>معرض الصور</span></div>
+          <h2 class="section-title">لحظات من مطعمنا</h2>
+        </div>
+        <div class="slideshow-container" role="region" aria-label="عرض شرائح الصور" aria-live="polite">
+          <div class="slideshow-slides" id="slideshowSlides">
+            <div class="slide"><img src="https://altayyibin.com/photos/1.jpeg" alt="صورة المطعم 1" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+            <div class="slide"><img src="https://altayyibin.com/photos/2.jpeg" alt="صورة المطعم 2" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+            <div class="slide"><img src="https://altayyibin.com/photos/3.jpeg" alt="صورة المطعم 3" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+            <div class="slide"><img src="https://altayyibin.com/photos/4.jpeg" alt="صورة المطعم 4" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+            <div class="slide"><img src="https://altayyibin.com/photos/5.jpeg" alt="صورة المطعم 5" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+            <div class="slide"><img src="https://altayyibin.com/photos/6.jpeg" alt="صورة المطعم 6" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+            <div class="slide"><img src="https://altayyibin.com/photos/7.jpeg" alt="صورة المطعم 7" loading="lazy" decoding="async"><div class="slide-overlay"></div></div>
+          </div>
+          <div class="slideshow-progress" id="slideshowProgress"></div>
+          <button class="slideshow-btn prev" id="slidePrev" aria-label="الشريحة السابقة"><i class="fas fa-chevron-right"></i></button>
+          <button class="slideshow-btn next" id="slideNext" aria-label="الشريحة التالية"><i class="fas fa-chevron-left"></i></button>
+        </div>
+        <div class="slideshow-dots" id="slideshowDots" role="tablist" aria-label="نقاط التنقل"></div>
+      </div>
+    </section>
+    <!-- ===== END PHOTO SLIDESHOW ===== -->
+
+    <section class="dishes" id="dishes" aria-label="أطباقنا المميزة">
   <div class="container">
     <div class="dishes-header reveal">
       <div class="section-tag"><i class="fas fa-circle"></i> أشهر أطباقنا</div>
@@ -2364,11 +2532,127 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 </script>
 
 
-  <!-- Reveal Safety Fallback -->
+  <!-- ===== SLIDESHOW SCRIPT ===== -->
   <script>
   (function() {
-    // Safety net: if IntersectionObserver misses elements (e.g. GitHub Pages CDN delay)
-    // force reveal after 3 seconds
+    var slides   = document.getElementById('slideshowSlides');
+    var dotsWrap = document.getElementById('slideshowDots');
+    var prevBtn  = document.getElementById('slidePrev');
+    var nextBtn  = document.getElementById('slideNext');
+    var progress = document.getElementById('slideshowProgress');
+    if (!slides) return;
+    var total   = slides.children.length;
+    var current = 0;
+    var timer   = null;
+    var DELAY   = 4000;
+    for (var i = 0; i < total; i++) {
+      (function(idx) {
+        var dot = document.createElement('button');
+        dot.className = 'slideshow-dot' + (idx === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'الشريحة ' + (idx + 1));
+        dot.setAttribute('role', 'tab');
+        dot.addEventListener('click', function() { goTo(idx); resetTimer(); });
+        dotsWrap.appendChild(dot);
+      })(i);
+    }
+    function updateDots() {
+      var dots = dotsWrap.querySelectorAll('.slideshow-dot');
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    }
+    function goTo(index) {
+      current = (index + total) % total;
+      slides.style.transform = 'translateX(' + (current * 100) + '%)';
+      updateDots();
+      progress.style.animation = 'none';
+      progress.offsetHeight;
+      progress.style.animation = 'slideProgress ' + (DELAY / 1000) + 's linear infinite';
+    }
+    prevBtn.addEventListener('click', function() { goTo(current - 1); resetTimer(); });
+    nextBtn.addEventListener('click', function() { goTo(current + 1); resetTimer(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight') { goTo(current - 1); resetTimer(); }
+      if (e.key === 'ArrowLeft')  { goTo(current + 1); resetTimer(); }
+    });
+    var touchStartX = 0;
+    slides.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+    slides.addEventListener('touchend', function(e) {
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) { diff > 0 ? goTo(current + 1) : goTo(current - 1); resetTimer(); }
+    });
+    function autoPlay() { goTo(current + 1); }
+    function resetTimer() { clearInterval(timer); timer = setInterval(autoPlay, DELAY); }
+    slides.parentElement.addEventListener('mouseenter', function() { clearInterval(timer); });
+    slides.parentElement.addEventListener('mouseleave', function() { resetTimer(); });
+    goTo(0);
+    resetTimer();
+  })();
+  </script>
+
+  <!-- ===== COUNTER ANIMATION SCRIPT ===== -->
+  <script>
+  (function() {
+    function toArabicNumerals(num) {
+      return String(num).replace(/[0-9]/g, function(d) {
+        return '٠١٢٣٤٥٦٧٨٩'[d];
+      });
+    }
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+    function animateCounter(el) {
+      var target   = parseFloat(el.dataset.target);
+      var prefix   = el.dataset.prefix  || '';
+      var decimal  = parseInt(el.dataset.decimal || '0');
+      var useArabic = el.dataset.arabic === 'true';
+      var duration = 2200;
+      var startTime = null;
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed  = timestamp - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased    = easeOutExpo(progress);
+        var current  = eased * target;
+        var display  = decimal > 0 ? current.toFixed(decimal) : Math.floor(current).toString();
+        el.textContent = useArabic ? prefix + toArabicNumerals(display) : prefix + display;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          var finalDisplay = decimal > 0 ? target.toFixed(decimal) : target.toString();
+          el.textContent = useArabic ? prefix + toArabicNumerals(finalDisplay) : prefix + finalDisplay;
+          el.classList.add('counting');
+          setTimeout(function() { el.classList.remove('counting'); }, 300);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+    var counters  = document.querySelectorAll('.counter[data-target]');
+    if (!counters.length) return;
+    var triggered = false;
+    function runCounters() {
+      if (triggered) return;
+      triggered = true;
+      counters.forEach(function(el, i) {
+        setTimeout(function() { animateCounter(el); }, i * 180);
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) { runCounters(); obs.disconnect(); }
+        });
+      }, { threshold: 0.4 });
+      var statsSection = document.querySelector('.hero-stats');
+      if (statsSection) obs.observe(statsSection);
+    } else {
+      window.addEventListener('load', runCounters);
+    }
+  })();
+  </script>
+
+  <!-- ===== REVEAL SAFETY FALLBACK ===== -->
+  <script>
+  (function() {
+    // Ensure all .reveal elements become visible after 3s (GitHub Pages CDN fix)
     setTimeout(function() {
       document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) {
         el.classList.add('visible');
